@@ -4,8 +4,8 @@ import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.Solver;
-import lombok.RequiredArgsConstructor;
 import java.util.Queue;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class MazeSolver implements Solver {
