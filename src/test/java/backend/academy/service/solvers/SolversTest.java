@@ -1,17 +1,15 @@
-package backend.academy.service.impl;
+package backend.academy.service.solvers;
 
 import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.generators.PrimGenerator;
 import backend.academy.service.renderers.DefaultMazeRenderer;
-import backend.academy.service.solvers.BfsSolver;
-import backend.academy.service.solvers.DfsSolver;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class MazeSolverTest {
+class SolversTest {
     private final GameSettings gameSettings = GameSettings.builder()
         .mazeHeight(10)
         .mazeWidth(10)

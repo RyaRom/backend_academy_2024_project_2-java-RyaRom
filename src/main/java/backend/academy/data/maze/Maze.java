@@ -1,6 +1,8 @@
 package backend.academy.data.maze;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import static backend.academy.data.maze.CellType.PASSAGE;
 import static backend.academy.data.maze.CellType.WALL;
 import static backend.academy.utils.Randomizer.pullRandomObject;
@@ -55,15 +57,16 @@ public record Maze(int height, int width, Cell[][] grid) {
     }
 
     /**
-     * Make a point reachable from the start
+     * Make a point reachable from the start point
      *
      * @param point the point to make reachable
+     * @param start the start point
      */
-    public void makePointReachable(Point point) {
+    public void makePointReachable(Point point, Point start) {
         setPoint(point, PASSAGE);
         List<Point> neighbours = point.getNeighbours(this);
         Point current = point;
-        while (!checkCellHasNeighbors(current)) {
+        while (!checkIfReachable(current, start, new HashSet<>())) {
             current = pullRandomObject(neighbours);
             setPoint(current, PASSAGE);
             addNeighbors(neighbours, current);
@@ -71,15 +74,23 @@ public record Maze(int height, int width, Cell[][] grid) {
     }
 
     /**
-     * Checks if a cell has any neighbors passage
+     * Check if a point is reachable from the start point using dfs
      *
-     * @param point the cell
-     * @return true if the cell has any neighbor passage, false otherwise
+     * @param current the point to check
+     * @param start   the start point
+     * @return true if the point is reachable, false otherwise
      */
-    private boolean checkCellHasNeighbors(Point point) {
-        return point.getNeighbours(this).stream()
-            .map(this::getCell)
-            .anyMatch(c -> c.type().isPassage());
+    public boolean checkIfReachable(Point current, Point start, Set<Point> visited) {
+        if (start.equals(current)) {
+            return true;
+        }
+        visited.add(current);
+
+        return current.getNeighbours(this).stream()
+            .filter(n -> getCell(n).type().isPassage()
+                && !visited.contains(n))
+            .map(n -> checkIfReachable(n, start, visited))
+            .reduce((a, b) -> a || b).orElse(false);
     }
 
     /**

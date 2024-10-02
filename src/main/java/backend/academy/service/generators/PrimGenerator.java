@@ -41,7 +41,7 @@ public class PrimGenerator implements Generator {
             maze.setPoint(current, PASSAGE);
             maze.addNeighbors(toVisit, current);
         }
-        maze.makePointReachable(end);
+        maze.makePointReachable(end, start);
 
         return maze;
     }
