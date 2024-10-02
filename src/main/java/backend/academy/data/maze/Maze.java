@@ -52,7 +52,7 @@ public record Maze(int height, int width, Cell[][] grid) {
      * @param point the point to set the cell at
      * @param type  the type of the cell
      */
-    public void setPoint(Point point, CellType type) {
+    public void setCell(Point point, CellType type) {
         grid[point.row()][point.col()] = new Cell(point, type);
     }
 
@@ -63,13 +63,13 @@ public record Maze(int height, int width, Cell[][] grid) {
      * @param start the start point
      */
     public void makePointReachable(Point point, Point start) {
-        setPoint(point, PASSAGE);
+        setCell(point, PASSAGE);
         List<Point> neighbours = point.getNeighbours(this);
         Point current = point;
         while (!checkIfReachable(current, start, new HashSet<>())) {
             current = pullRandomObject(neighbours);
-            setPoint(current, PASSAGE);
-            addNeighbors(neighbours, current);
+            setCell(current, PASSAGE);
+            addNeighbours(neighbours, current);
         }
     }
 
@@ -94,24 +94,24 @@ public record Maze(int height, int width, Cell[][] grid) {
     }
 
     /**
-     * Add neighbors to the toVisit list
+     * Add neighbours to the toVisit list
      *
-     * @param toVisit the list to add neighbors to
+     * @param toVisit the list to add neighbours to
      * @param current the current cell
      */
-    public void addNeighbors(List<Point> toVisit, Point current) {
+    public void addNeighbours(List<Point> toVisit, Point current) {
         current.getNeighbours(this).stream()
             .filter(n -> !this.getCell(n).type().isPassage())
             .forEach(toVisit::add);
     }
 
     /**
-     * Checks if a cell has exactly one neighbor passage
+     * Checks if a cell has exactly one neighbour passage
      *
      * @param point the cell
-     * @return true if the cell has exactly one neighbor passage, false otherwise
+     * @return true if the cell has exactly one neighbour passage, false otherwise
      */
-    public boolean checkCellNeighbor(Point point) {
+    public boolean checkCellNeighbour(Point point) {
         return point.getNeighbours(this).stream()
             .map(this::getCell)
             .filter(c -> c.type().isPassage())

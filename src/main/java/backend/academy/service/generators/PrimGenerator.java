@@ -28,18 +28,18 @@ public class PrimGenerator implements Generator {
 
         Point start = gameSettings.start();
         Point end = gameSettings.end();
-        maze.setPoint(start, PASSAGE);
+        maze.setCell(start, PASSAGE);
         List<Point> toVisit = new ArrayList<>();
-        maze.addNeighbors(toVisit, start);
+        maze.addNeighbours(toVisit, start);
 
         while (!toVisit.isEmpty()) {
             Point current = pullRandomObject(toVisit);
-            if (!maze.checkCellNeighbor(current)) {
+            if (!maze.checkCellNeighbour(current)) {
                 continue;
             }
 
-            maze.setPoint(current, PASSAGE);
-            maze.addNeighbors(toVisit, current);
+            maze.setCell(current, PASSAGE);
+            maze.addNeighbours(toVisit, current);
         }
         maze.makePointReachable(end, start);
 

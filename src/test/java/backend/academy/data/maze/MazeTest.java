@@ -19,7 +19,7 @@ class MazeTest {
     void makePointReachable() {
         maze = new Maze(5, 5);
         Point end = Point.of(4, 4);
-        maze.setPoint(Point.of(2, 2), PASSAGE);
+        maze.setCell(Point.of(2, 2), PASSAGE);
         renderer.render(maze);
 
         assertFalse(maze.checkIfReachable(end, gameSettings.start(), new HashSet<>()));
