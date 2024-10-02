@@ -8,54 +8,50 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import static backend.academy.data.enums.MazeGenerationAlgorithm.PRIM;
-import static backend.academy.data.enums.PathfindingAlgorithm.BELLMAN;
+import lombok.Setter;
+import static backend.academy.data.GameSettings.DEFAULT_SETTINGS;
 import static lombok.Builder.Default;
 
 @Getter
+@Setter
 @Builder
 @EqualsAndHashCode
-public final class GameSettings {
-    public static final GameSettings DEFAULT_SETTINGS = builder().build();
+public final class GameSettingsMutable {
+    @Default
+    private List<CellType> additionalTypes = DEFAULT_SETTINGS.additionalTypes();
 
     @Default
-    private final List<CellType> additionalTypes = List.of(
-        new CellType(2, true, 5, '▓'),
-        new CellType(3, true, -10, '₿')
-    );
+    private Character pathRender = DEFAULT_SETTINGS.pathRender();
 
     @Default
-    private final Character pathRender = '·';
+    private Character wallRender = DEFAULT_SETTINGS.wallRender();
 
     @Default
-    private final Character wallRender = '█';
+    private Character passageRender = DEFAULT_SETTINGS.passageRender();
 
     @Default
-    private final Character passageRender = ' ';
+    private Integer mazeHeight = DEFAULT_SETTINGS.mazeHeight();
 
     @Default
-    private final Integer mazeHeight = 20;
+    private Integer mazeWidth = DEFAULT_SETTINGS.mazeWidth();
 
     @Default
-    private final Integer mazeWidth = 20;
+    private MazeGenerationAlgorithm generationAlgorithm = DEFAULT_SETTINGS.generationAlgorithm();
 
     @Default
-    private final MazeGenerationAlgorithm generationAlgorithm = PRIM;
+    private PathfindingAlgorithm pathfindingAlgorithm = DEFAULT_SETTINGS.pathfindingAlgorithm();
 
     @Default
-    private final PathfindingAlgorithm pathfindingAlgorithm = BELLMAN;
+    private Integer pathRenderSpeedMs = DEFAULT_SETTINGS.pathRenderSpeedMs();
 
     @Default
-    private final Integer pathRenderSpeedMs = 500;
+    private Point start = DEFAULT_SETTINGS.start();
 
     @Default
-    private final Point start = Point.of(0, 0);
+    private Point end = DEFAULT_SETTINGS.end();
 
-    @Default
-    private final Point end = Point.of(10, 10);
-
-    public GameSettingsMutable toMutable() {
-        return GameSettingsMutable.builder()
+    public GameSettings toImmutable() {
+        return GameSettings.builder()
             .additionalTypes(additionalTypes)
             .pathRender(pathRender)
             .wallRender(wallRender)
