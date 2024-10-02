@@ -55,8 +55,6 @@ public class MazeSolver implements Solver {
         return null;
     }
 
-    ;
-
     private Queue<Point> aStar(Maze maze) {
         return null;
     }

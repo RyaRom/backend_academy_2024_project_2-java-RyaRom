@@ -23,6 +23,7 @@ public class MazeGenerator implements Generator {
      */
     @Override
     public Maze generate() {
+        validateSettings();
         return switch (gameSettings.generationAlgorithm()) {
             case PRIM -> generatePrim();
         };
@@ -110,7 +111,6 @@ public class MazeGenerator implements Generator {
      * @return the generated maze
      */
     private Maze generatePrim() {
-        validateSettings();
         Maze maze = new Maze(
             gameSettings.mazeHeight(),
             gameSettings.mazeWidth()
