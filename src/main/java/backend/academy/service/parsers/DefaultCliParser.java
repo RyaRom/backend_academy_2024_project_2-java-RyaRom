@@ -13,7 +13,7 @@ public class DefaultCliParser implements CliParser {
 
     public final static PrintStream CONSOLE_WRITER = System.out;
 
-    public final String INPUT_NOT_RECOGNIZED = "Input wasn't recognized. Write command again: ";
+    public final String inputNotRecognized = "Input wasn't recognized. Write command again: ";
 
     private final BufferedReader inputReader;
 
@@ -36,7 +36,7 @@ public class DefaultCliParser implements CliParser {
                     return command;
                 }
             }
-            outputWriter.print(INPUT_NOT_RECOGNIZED);
+            outputWriter.print(inputNotRecognized);
         }
         return -1;
     }

@@ -1,6 +1,6 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.GameSettingsMutable;
+import backend.academy.data.MutableGameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.Generator;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GeneratorsTest {
 
-    private final GameSettingsMutable gameSettings = GameSettingsMutable.builder()
+    private final MutableGameSettings gameSettings = MutableGameSettings.builder()
         .mazeHeight(50)
         .mazeWidth(50)
         .end(Point.of(49, 49))

@@ -19,7 +19,7 @@ import static lombok.Builder.Default;
 @Setter
 @Builder
 @EqualsAndHashCode
-public final class GameSettingsMutable {
+public final class MutableGameSettings {
     @Default
     private List<CellType> additionalTypes = DEFAULT_SETTINGS.additionalTypes();
 

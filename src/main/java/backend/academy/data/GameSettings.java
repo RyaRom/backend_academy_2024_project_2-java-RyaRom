@@ -61,8 +61,8 @@ public final class GameSettings {
     @Default
     private final Point end = Point.of(1, 1);
 
-    public GameSettingsMutable mutable() {
-        return GameSettingsMutable.builder()
+    public MutableGameSettings mutable() {
+        return MutableGameSettings.builder()
             .additionalTypes(additionalTypes)
             .pathRender(pathRender)
             .wallRender(wallRender)
