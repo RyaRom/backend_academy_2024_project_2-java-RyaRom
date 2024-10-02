@@ -10,6 +10,8 @@ import java.util.Queue;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import static backend.academy.data.maze.CellType.PASSAGE;
+import static backend.academy.data.maze.CellType.WALL;
 
 @RequiredArgsConstructor
 public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer {
@@ -22,7 +24,7 @@ public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer
         var grid = maze.grid();
         for (Cell[] cells : grid) {
             for (Cell cell : cells) {
-                outputWriter.print(cell.type().render());
+                outputWriter.print(getRenderForCell(cell));
             }
             outputWriter.println();
         }
@@ -46,12 +48,23 @@ public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer
                 if (path.contains(cell.coordinates())) {
                     outputWriter.print(gameSettings.pathRender());
                 } else {
-                    outputWriter.print(cell.type().render());
+                    outputWriter.print(getRenderForCell(cell));
                 }
             }
             outputWriter.println();
         }
         outputWriter.println();
+    }
+
+    private char getRenderForCell(Cell cell) {
+        var type = cell.type();
+        if (type.equals(PASSAGE)) {
+            return gameSettings.passageRender();
+        }
+        if (type.equals(WALL)) {
+            return gameSettings.wallRender();
+        }
+        return type.render();
     }
 
 }

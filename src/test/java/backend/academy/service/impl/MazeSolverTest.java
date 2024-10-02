@@ -17,6 +17,8 @@ class MazeSolverTest {
         .mazeWidth(10)
         .end(Point.of(9, 9))
         .pathRenderSpeedMs(100)
+        .wallRender('0')
+        .pathRender('2')
         .build();
 
     private final Maze maze = new PrimGenerator(gameSettings).generate();
@@ -25,6 +27,7 @@ class MazeSolverTest {
 
     @Test
     void bfs() {
+        renderer.render(maze);
         BfsSolver solver = new BfsSolver(gameSettings);
         var path = solver.solve(maze);
 
@@ -36,6 +39,7 @@ class MazeSolverTest {
 
     @Test
     void dfs() {
+        renderer.render(maze);
         DfsSolver solver = new DfsSolver(gameSettings);
         var path = solver.solve(maze);
 
@@ -47,6 +51,7 @@ class MazeSolverTest {
 
     @Test
     void allPaths() {
+        renderer.render(maze);
         BfsSolver bfsSolver = new BfsSolver(gameSettings);
         DfsSolver dfsSolver = new DfsSolver(gameSettings);
         var bfsPath = bfsSolver.solve(maze);
