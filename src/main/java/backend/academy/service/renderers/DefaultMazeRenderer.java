@@ -1,20 +1,18 @@
-package backend.academy.service.impl;
+package backend.academy.service.renderers;
 
 import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Cell;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
-import backend.academy.service.Renderer;
 import java.io.PrintStream;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 @RequiredArgsConstructor
-public class MazeRenderer implements Renderer {
+public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer {
     private final GameSettings gameSettings;
 
     private final PrintStream outputWriter;
@@ -38,35 +36,7 @@ public class MazeRenderer implements Renderer {
             pathPoints.add(path.poll());
             renderWithPath(maze, pathPoints);
             Thread.sleep(gameSettings.pathRenderSpeedMs());
-            clearScreen();
         }
-    }
-
-    @Override
-    public void renderMenu(List<String> options, String menuName) {
-        if (menuName == null || options == null || options.isEmpty()) {
-            throw new IllegalArgumentException("No string from the empty array");
-        }
-
-        StringBuilder stringBuilder = new StringBuilder()
-            .append("Select ")
-            .append(menuName)
-            .append(":")
-            .append(System.lineSeparator())
-            .append("0. Go back")
-            .append(System.lineSeparator());
-
-        for (int i = 0; i < options.size(); i++) {
-            if (options.get(i) == null) {
-                continue;
-            }
-            stringBuilder.append(i + 1)
-                .append(". ")
-                .append(options.get(i))
-                .append(System.lineSeparator());
-        }
-        stringBuilder.append("Enter your choice: ");
-        outputWriter.println(stringBuilder);
     }
 
     private void renderWithPath(Maze maze, Set<Point> path) {
@@ -84,14 +54,4 @@ public class MazeRenderer implements Renderer {
         outputWriter.println();
     }
 
-    @SuppressWarnings("MagicNumber")
-    private void clearScreen() {
-        //for IDE's terminal
-        for (int i = 0; i < 25; i++) {
-            outputWriter.println();
-        }
-
-        outputWriter.print("\033[H\033[2J");
-        outputWriter.flush();
-    }
 }

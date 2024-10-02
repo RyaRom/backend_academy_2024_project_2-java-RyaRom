@@ -3,6 +3,7 @@ package backend.academy.data.maze;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static backend.academy.data.maze.CellType.PASSAGE;
 
 /**
  * Class representing the point coordinates
@@ -79,5 +80,17 @@ public record Point(int row, int col) {
         Optional.ofNullable(this.right(maze.width()))
             .ifPresent(neighbours::add);
         return neighbours;
+    }
+
+    /**
+     * Returns a list of all passage neighbours of the point
+     *
+     * @param maze the maze
+     * @return the list of passage neighbours
+     */
+    public List<Point> getPassageNeighbours(Maze maze) {
+        return this.getNeighbours(maze).stream()
+            .filter(p -> maze.getCell(p).type() == PASSAGE)
+            .toList();
     }
 }

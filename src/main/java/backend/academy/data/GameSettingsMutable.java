@@ -12,6 +12,9 @@ import lombok.Setter;
 import static backend.academy.data.GameSettings.DEFAULT_SETTINGS;
 import static lombok.Builder.Default;
 
+/**
+ * This class represents the mutable version of {@link GameSettings}
+ */
 @Getter
 @Setter
 @Builder
@@ -50,7 +53,7 @@ public final class GameSettingsMutable {
     @Default
     private Point end = DEFAULT_SETTINGS.end();
 
-    public GameSettings toImmutable() {
+    public GameSettings immutable() {
         return GameSettings.builder()
             .additionalTypes(additionalTypes)
             .pathRender(pathRender)

@@ -12,6 +12,13 @@ import static backend.academy.data.enums.MazeGenerationAlgorithm.PRIM;
 import static backend.academy.data.enums.PathfindingAlgorithm.BELLMAN;
 import static lombok.Builder.Default;
 
+/**
+ * Immutable class for game settings representation.
+ * Contains maze width, height, generation algorithm, pathfinding algorithm, render symbols,
+ * additional cell types, start and end points, and path rendering speed in ms.
+ *
+ * <p>Can be saved and written in game menu</p>
+ */
 @Getter
 @Builder
 @EqualsAndHashCode
@@ -31,7 +38,7 @@ public final class GameSettings {
     private final Character wallRender = '█';
 
     @Default
-    private final Character passageRender = ' ';
+    private final Character passageRender = '░';
 
     @Default
     private final Integer mazeHeight = 20;
@@ -52,9 +59,9 @@ public final class GameSettings {
     private final Point start = Point.of(0, 0);
 
     @Default
-    private final Point end = Point.of(10, 10);
+    private final Point end = Point.of(1, 1);
 
-    public GameSettingsMutable toMutable() {
+    public GameSettingsMutable mutable() {
         return GameSettingsMutable.builder()
             .additionalTypes(additionalTypes)
             .pathRender(pathRender)
@@ -68,5 +75,22 @@ public final class GameSettings {
             .start(start)
             .end(end)
             .build();
+    }
+
+    /**
+     * Validates the game settings
+     *
+     * @return true if the settings are invalid, false otherwise
+     */
+    public boolean isInvalid() {
+        return mazeHeight() < 1
+            || mazeWidth() < 1
+            || start.col() < 0 || start.row() < 0
+            || end.col() < 0 || end.row() < 0
+            || start.col() >= mazeWidth()
+            || start.row() >= mazeHeight()
+            || end.col() >= mazeWidth()
+            || end.row() >= mazeHeight()
+            || start.equals(end);
     }
 }

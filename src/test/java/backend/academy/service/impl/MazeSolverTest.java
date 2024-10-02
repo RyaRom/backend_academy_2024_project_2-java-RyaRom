@@ -1,58 +1,62 @@
 package backend.academy.service.impl;
 
 import backend.academy.data.GameSettings;
-import backend.academy.data.GameSettingsMutable;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
-import org.junit.jupiter.api.BeforeEach;
+import backend.academy.service.generators.PrimGenerator;
+import backend.academy.service.renderers.DefaultMazeRenderer;
+import backend.academy.service.solvers.BfsSolver;
+import backend.academy.service.solvers.DfsSolver;
 import org.junit.jupiter.api.Test;
-import static backend.academy.data.enums.PathfindingAlgorithm.BFS;
-import static backend.academy.data.enums.PathfindingAlgorithm.DFS;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MazeSolverTest {
+    private final GameSettings gameSettings = GameSettings.builder()
+        .mazeHeight(10)
+        .mazeWidth(10)
+        .end(Point.of(9, 9))
+        .pathRenderSpeedMs(100)
+        .build();
 
-    private MazeSolver mazeSolver;
+    private final Maze maze = new PrimGenerator(gameSettings).generate();
 
-    private MazeRenderer mazeRenderer;
-
-    private MazeGenerator mazeGenerator;
-
-    private GameSettingsMutable settingsMutable;
-
-    private Maze maze;
-
-    @BeforeEach
-    void setUp() {
-        settingsMutable = GameSettingsMutable.builder()
-            .mazeHeight(10)
-            .mazeWidth(50)
-            .start(Point.of(0, 0))
-            .end(Point.of(9, 49))
-            .pathRenderSpeedMs(100)
-            .build();
-        GameSettings settings = settingsMutable.toImmutable();
-        mazeRenderer = new MazeRenderer(settings, System.out);
-        mazeGenerator = new MazeGenerator(settings);
-        maze = mazeGenerator.generate();
-    }
+    private final DefaultMazeRenderer renderer = new DefaultMazeRenderer(gameSettings, System.out);
 
     @Test
     void bfs() {
-        settingsMutable.pathfindingAlgorithm(BFS);
-        GameSettings settings = settingsMutable.toImmutable();
-        mazeSolver = new MazeSolver(settings);
-        mazeRenderer.render(maze);
-        var pathBfs = mazeSolver.solve(maze);
-        mazeRenderer.render(maze, pathBfs);
+        BfsSolver solver = new BfsSolver(gameSettings);
+        var path = solver.solve(maze);
+
+        assertFalse(path.isEmpty());
+        assertTrue(path.contains(gameSettings.start()));
+        assertTrue(path.contains(gameSettings.end()));
+        assertTrue(path.size() >= gameSettings.mazeHeight() + gameSettings.mazeWidth() - 2);
     }
 
     @Test
     void dfs() {
-        settingsMutable.pathfindingAlgorithm(DFS);
-        GameSettings settings = settingsMutable.toImmutable();
-        mazeSolver = new MazeSolver(settings);
-        mazeRenderer.render(maze);
-        var pathDfs = mazeSolver.solve(maze);
-        mazeRenderer.render(maze, pathDfs);
+        DfsSolver solver = new DfsSolver(gameSettings);
+        var path = solver.solve(maze);
+
+        assertFalse(path.isEmpty());
+        assertTrue(path.contains(gameSettings.start()));
+        assertTrue(path.contains(gameSettings.end()));
+        assertTrue(path.size() >= gameSettings.mazeHeight() + gameSettings.mazeWidth() - 2);
+    }
+
+    @Test
+    void allPaths() {
+        BfsSolver bfsSolver = new BfsSolver(gameSettings);
+        DfsSolver dfsSolver = new DfsSolver(gameSettings);
+        var bfsPath = bfsSolver.solve(maze);
+        var dfsPath = dfsSolver.solve(maze);
+
+        assertFalse(bfsPath.isEmpty());
+        assertFalse(dfsPath.isEmpty());
+        assertTrue(bfsPath.size() <= dfsPath.size());
+
+        renderer.render(maze, bfsPath);
+        renderer.render(maze, dfsPath);
     }
 }
