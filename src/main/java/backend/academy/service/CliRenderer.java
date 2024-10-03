@@ -30,4 +30,6 @@ public interface CliRenderer {
      * Clears the terminal
      */
     void clearScreen();
+
+    void println(String message);
 }

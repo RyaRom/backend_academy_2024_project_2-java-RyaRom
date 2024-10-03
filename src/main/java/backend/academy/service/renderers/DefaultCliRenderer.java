@@ -57,8 +57,18 @@ public class DefaultCliRenderer implements CliRenderer {
     }
 
     @Override
+    @SuppressWarnings("MagicNumber")
     public void clearScreen() {
+        for (int i = 0; i < 20; i++) {
+            outputWriter.println();
+        }
+
         outputWriter.print("\033[H\033[2J");
         outputWriter.flush();
+    }
+
+    @Override
+    public void println(String message) {
+        outputWriter.println(message);
     }
 }

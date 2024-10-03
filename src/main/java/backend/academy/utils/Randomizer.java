@@ -16,4 +16,9 @@ public class Randomizer {
         int index = RANDOM.nextInt(objects.size());
         return objects.remove(index);
     }
+
+    @SuppressWarnings("MagicNumber")
+    public static String getRandomInt() {
+        return String.valueOf(RANDOM.nextInt(100000));
+    }
 }

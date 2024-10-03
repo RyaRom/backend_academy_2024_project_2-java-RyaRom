@@ -4,10 +4,13 @@ import backend.academy.data.enums.MazeGenerationAlgorithm;
 import backend.academy.data.enums.PathfindingAlgorithm;
 import backend.academy.data.maze.CellType;
 import backend.academy.data.maze.Point;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.experimental.Accessors;
 import static backend.academy.data.enums.MazeGenerationAlgorithm.PRIM;
 import static backend.academy.data.enums.PathfindingAlgorithm.BELLMAN;
 import static lombok.Builder.Default;
@@ -22,66 +25,63 @@ import static lombok.Builder.Default;
 @Getter
 @Builder
 @EqualsAndHashCode
+@Accessors(fluent = true)
 public final class GameSettings {
     public static final GameSettings DEFAULT_SETTINGS = builder().build();
 
+    @JsonProperty
     @Default
     private final List<CellType> additionalTypes = List.of(
-        new CellType(2, true, 5, '▓'),
-        new CellType(3, true, -10, '₿')
+        new CellType(true, 5, '▓'),
+        new CellType(true, -10, '₿')
     );
 
+    @JsonProperty
     @Default
     private final Character pathRender = '·';
 
+    @JsonProperty
     @Default
     private final Character wallRender = '█';
 
+    @JsonProperty
     @Default
     private final Character passageRender = '░';
 
+    @JsonProperty
     @Default
     private final Integer mazeHeight = 20;
 
+    @JsonProperty
     @Default
     private final Integer mazeWidth = 20;
 
+    @JsonProperty
     @Default
     private final MazeGenerationAlgorithm generationAlgorithm = PRIM;
 
+    @JsonProperty
     @Default
     private final PathfindingAlgorithm pathfindingAlgorithm = BELLMAN;
 
+    @JsonProperty
     @Default
     private final Integer pathRenderSpeedMs = 500;
 
+    @JsonProperty
     @Default
     private final Point start = Point.of(0, 0);
 
+    @JsonProperty
     @Default
     private final Point end = Point.of(1, 1);
-
-    public MutableGameSettings mutable() {
-        return MutableGameSettings.builder()
-            .additionalTypes(additionalTypes)
-            .pathRender(pathRender)
-            .wallRender(wallRender)
-            .passageRender(passageRender)
-            .mazeHeight(mazeHeight)
-            .mazeWidth(mazeWidth)
-            .generationAlgorithm(generationAlgorithm)
-            .pathfindingAlgorithm(pathfindingAlgorithm)
-            .pathRenderSpeedMs(pathRenderSpeedMs)
-            .start(start)
-            .end(end)
-            .build();
-    }
 
     /**
      * Validates the game settings
      *
      * @return true if the settings are invalid, false otherwise
      */
+    @JsonIgnore
     public boolean isInvalid() {
         return mazeHeight() < 1
             || mazeWidth() < 1

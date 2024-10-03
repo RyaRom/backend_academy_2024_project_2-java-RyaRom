@@ -13,4 +13,12 @@ public interface CliParser {
         int lowerBound,
         int upperBound
     );
+
+    /**
+     * Reads user input and returns command until command is correct
+     *
+     * @param regex regex to match
+     * @return command or "" if there is no correct command in buffer
+     */
+    String read(String regex);
 }
