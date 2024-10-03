@@ -3,7 +3,7 @@ package backend.academy.data.maze;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static backend.academy.data.maze.CellType.PASSAGE;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Class representing the point coordinates
@@ -18,6 +18,7 @@ public record Point(int row, int col) {
      *
      * @return the upper neighbour or null if the point is on the top row
      */
+    @Nullable
     public Point upper() {
         if (row == 0) {
             return null;
@@ -31,6 +32,7 @@ public record Point(int row, int col) {
      * @param maxHeight the maximum height of the maze
      * @return the lower neighbour or null if the point is on the bottom row
      */
+    @Nullable
     public Point lower(int maxHeight) {
         if (row == maxHeight - 1) {
             return null;
@@ -43,6 +45,7 @@ public record Point(int row, int col) {
      *
      * @return the left neighbour or null if the point is on the leftmost column
      */
+    @Nullable
     public Point left() {
         if (col == 0) {
             return null;
@@ -56,6 +59,7 @@ public record Point(int row, int col) {
      * @param maxWidth the maximum width of the maze
      * @return the right neighbour or null if the point is on the rightmost column
      */
+    @Nullable
     public Point right(int maxWidth) {
         if (col == maxWidth - 1) {
             return null;
@@ -90,7 +94,7 @@ public record Point(int row, int col) {
      */
     public List<Point> getPassageNeighbours(Maze maze) {
         return this.getNeighbours(maze).stream()
-            .filter(p -> maze.getCell(p).type() == PASSAGE)
+            .filter(p -> maze.getCell(p).type().isPassage())
             .toList();
     }
 }

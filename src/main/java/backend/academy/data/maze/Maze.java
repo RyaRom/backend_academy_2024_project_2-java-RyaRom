@@ -57,6 +57,18 @@ public record Maze(int height, int width, Cell[][] grid) {
     }
 
     /**
+     * Set the cell at the given point to a type from the given biomes
+     *
+     * @param point  the point to set the cell at
+     * @param biomes the biomes to choose from
+     */
+    public void setCellBiomeType(Point point, CellType[][] biomes) {
+        grid[point.row()][point.col()] = new Cell(
+            point, biomes[point.row()][point.col()]
+        );
+    }
+
+    /**
      * Make a point reachable from the start point
      *
      * @param point the point to make reachable

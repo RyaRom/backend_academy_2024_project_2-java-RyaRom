@@ -16,7 +16,7 @@ import static backend.academy.data.enums.PathfindingAlgorithm.BFS;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class GeneratorsTest {
+class MazeGeneratorsTest {
 
     private final MutableGameSettings gameSettings = MutableGameSettings.builder()
         .mazeHeight(50)

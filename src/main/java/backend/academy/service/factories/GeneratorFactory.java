@@ -5,6 +5,7 @@ import backend.academy.exception.IncorrectSettingsException;
 import backend.academy.service.Generator;
 import backend.academy.service.generators.KruskalGenerator;
 import backend.academy.service.generators.PrimGenerator;
+import backend.academy.service.generators.PrimitiveBiomeGenerator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class GeneratorFactory {
         }
 
         return switch (gameSettings.generationAlgorithm()) {
-            case PRIM -> new PrimGenerator(gameSettings);
+            case PRIM -> new PrimGenerator(gameSettings, new PrimitiveBiomeGenerator(gameSettings));
             case KRUSKAL -> new KruskalGenerator(gameSettings);
         };
     }

@@ -27,7 +27,8 @@ public final class SettingsFileHandler {
 
     private final MutableGameSettings gameSettings = MutableGameSettings.builder().build();
 
-    private String name = getRandomInt();
+    @SuppressWarnings("MagicNumber")
+    private String name = getRandomInt(100000);
 
     public void createSettings() {
         configureDigit("maze height", gameSettings::mazeHeight);

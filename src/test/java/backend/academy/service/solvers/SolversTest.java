@@ -4,6 +4,7 @@ import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.generators.PrimGenerator;
+import backend.academy.service.generators.PrimitiveBiomeGenerator;
 import backend.academy.service.renderers.DefaultMazeRenderer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,7 +20,7 @@ class SolversTest {
         .pathRender('2')
         .build();
 
-    private final Maze maze = new PrimGenerator(gameSettings).generate();
+    private final Maze maze = new PrimGenerator(gameSettings, new PrimitiveBiomeGenerator(gameSettings)).generate();
 
     private final DefaultMazeRenderer renderer = new DefaultMazeRenderer(gameSettings, System.out);
 

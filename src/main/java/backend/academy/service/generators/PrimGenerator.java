@@ -3,16 +3,18 @@ package backend.academy.service.generators;
 import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
+import backend.academy.service.BiomeGenerator;
 import backend.academy.service.Generator;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import static backend.academy.data.maze.CellType.PASSAGE;
 import static backend.academy.utils.Randomizer.pullRandomObject;
 
 @RequiredArgsConstructor
 public class PrimGenerator implements Generator {
     private final GameSettings gameSettings;
+
+    private final BiomeGenerator biomeGenerator;
 
     /**
      * Generates a maze using the Prim algorithm
@@ -25,10 +27,11 @@ public class PrimGenerator implements Generator {
             gameSettings.mazeHeight(),
             gameSettings.mazeWidth()
         );
+        var biomes = biomeGenerator.generate();
 
         Point start = gameSettings.start();
         Point end = gameSettings.end();
-        maze.setCell(start, PASSAGE);
+        maze.setCellBiomeType(start, biomes);
         List<Point> toVisit = new ArrayList<>();
         maze.addNeighbours(toVisit, start);
 
@@ -38,7 +41,7 @@ public class PrimGenerator implements Generator {
                 continue;
             }
 
-            maze.setCell(current, PASSAGE);
+            maze.setCellBiomeType(current, biomes);
             maze.addNeighbours(toVisit, current);
         }
         maze.makePointReachable(end, start);
