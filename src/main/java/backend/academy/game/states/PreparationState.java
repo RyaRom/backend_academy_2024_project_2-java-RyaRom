@@ -17,7 +17,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.data.GameSettings.DEFAULT_SETTINGS;
-import static backend.academy.game.GameContext.SETTINGS_LOCATION;
 import static backend.academy.game.GameContext.SETTINGS_MENU;
 import static backend.academy.game.GameContext.START_MENU;
 
@@ -32,6 +31,8 @@ public class PreparationState implements GameState {
     private final CliParser parser;
 
     private final FileParser<GameSettings> fileParser;
+
+    private final File settingsLocation;
 
     private GameSettings gameSettings = DEFAULT_SETTINGS;
 
@@ -65,15 +66,15 @@ public class PreparationState implements GameState {
     private void loadSettingsSelector(GameContext gameContext) {
         List<String> allSettings = new ArrayList<>();
         allSettings.add("Load default settings");
-        allSettings.addAll(Arrays.stream(fileParser.getJsonInDir(SETTINGS_LOCATION)).toList());
-        renderer.renderMenu(allSettings, "settings (path %s)".formatted(SETTINGS_LOCATION));
+        allSettings.addAll(Arrays.stream(fileParser.getJsonInDir(settingsLocation)).toList());
+        renderer.renderMenu(allSettings, "settings (path %s)".formatted(settingsLocation));
 
         int menuChoice = parser.readCommand(0, allSettings.size());
         switch (menuChoice) {
             case 0 -> gameCycle(gameContext);
             case 1 -> gameSettings = DEFAULT_SETTINGS;
             default -> {
-                String chosenPath = SETTINGS_LOCATION + allSettings.get(menuChoice - 1);
+                String chosenPath = settingsLocation + allSettings.get(menuChoice - 1);
                 log.info("Adding words from JSON file: {}", chosenPath);
                 gameSettings = fileParser.readFromFile(new File(chosenPath), GameSettings.class);
             }
@@ -90,7 +91,7 @@ public class PreparationState implements GameState {
             case 1 -> settingsFileHandler.createSettings();
             case 2 -> settingsFileHandler.changeName();
             case 3 -> {
-                settingsFileHandler.save(SETTINGS_LOCATION.getPath());
+                settingsFileHandler.save(settingsLocation.getPath());
                 gameCycle(gameContext);
                 return;
             }

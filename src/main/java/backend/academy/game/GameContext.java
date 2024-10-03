@@ -55,7 +55,8 @@ public class GameContext {
         state = new PreparationState(
             new DefaultCliRenderer(outputWriter),
             new DefaultCliParser(inputReader, outputWriter),
-            new JsonParser<>(new ObjectMapper())
+            new JsonParser<>(new ObjectMapper()),
+            SETTINGS_LOCATION
         );
         state.gameCycle(this);
     }
