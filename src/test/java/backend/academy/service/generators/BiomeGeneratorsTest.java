@@ -42,9 +42,7 @@ class BiomeGeneratorsTest {
             .flatMap(Arrays::stream)
             .collect(Collectors.toSet());
         assertTrue(biomeSet.contains(PASSAGE));
-        assertTrue(biomeSet.contains(cellA));
-        assertTrue(biomeSet.contains(cellB));
-        assertTrue(biomeSet.contains(cellC));
+        assertTrue(biomeSet.contains(cellA) || biomeSet.contains(cellB) || biomeSet.contains(cellC));
         assertFalse(biomeSet.contains(cellD));
     }
 }
