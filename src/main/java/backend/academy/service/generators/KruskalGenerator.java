@@ -1,10 +1,8 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
-import backend.academy.service.BiomeGenerator;
-import backend.academy.service.Generator;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

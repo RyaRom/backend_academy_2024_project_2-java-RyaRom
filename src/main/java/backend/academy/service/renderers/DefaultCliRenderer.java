@@ -1,6 +1,5 @@
 package backend.academy.service.renderers;
 
-import backend.academy.service.CliRenderer;
 import java.io.PrintStream;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

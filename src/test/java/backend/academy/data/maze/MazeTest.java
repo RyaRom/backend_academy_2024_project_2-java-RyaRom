@@ -1,8 +1,8 @@
 package backend.academy.data.maze;
 
-import backend.academy.data.GameSettings;
-import backend.academy.service.BiomeGenerator;
-import backend.academy.service.MazeRenderer;
+import backend.academy.data.settings.GameSettings;
+import backend.academy.service.generators.BiomeGenerator;
+import backend.academy.service.renderers.MazeRenderer;
 import backend.academy.service.generators.PrimitiveBiomeGenerator;
 import backend.academy.service.renderers.DefaultMazeRenderer;
 import org.junit.jupiter.api.Assertions;

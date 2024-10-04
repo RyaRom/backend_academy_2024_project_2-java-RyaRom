@@ -1,11 +1,11 @@
 package backend.academy.game;
 
-import backend.academy.data.GameSettings;
-import backend.academy.data.MutableGameSettings;
+import backend.academy.data.settings.GameSettings;
+import backend.academy.data.settings.MutableGameSettings;
 import backend.academy.data.maze.CellType;
-import backend.academy.service.CliParser;
-import backend.academy.service.CliRenderer;
-import backend.academy.service.FileParser;
+import backend.academy.service.parsers.CliParser;
+import backend.academy.service.renderers.CliRenderer;
+import backend.academy.service.parsers.FileParser;
 import java.io.File;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +44,7 @@ class SettingsFileHandlerTest {
         when(parser.read(anyString())).thenReturn(
             "20",
             "20",
-            "500",
+            "0",
             "1.0",
             "·",
             "█",

@@ -1,6 +1,5 @@
 package backend.academy.service.parsers;
 
-import backend.academy.service.FileParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import lombok.RequiredArgsConstructor;

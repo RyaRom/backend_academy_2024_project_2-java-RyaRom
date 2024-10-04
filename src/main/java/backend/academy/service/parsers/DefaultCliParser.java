@@ -1,6 +1,5 @@
 package backend.academy.service.parsers;
 
-import backend.academy.service.CliParser;
 import java.io.BufferedReader;
 import java.io.PrintStream;
 import lombok.RequiredArgsConstructor;

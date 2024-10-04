@@ -1,5 +1,6 @@
 package backend.academy.game;
 
+import backend.academy.game.states.GameState;
 import backend.academy.game.states.PreparationState;
 import backend.academy.service.parsers.DefaultCliParser;
 import backend.academy.service.parsers.JsonParser;

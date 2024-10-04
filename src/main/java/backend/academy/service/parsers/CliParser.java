@@ -1,4 +1,4 @@
-package backend.academy.service;
+package backend.academy.service.parsers;
 
 public interface CliParser {
 

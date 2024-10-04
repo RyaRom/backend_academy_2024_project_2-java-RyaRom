@@ -1,13 +1,12 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.data.maze.CellType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import static backend.academy.data.maze.CellType.PASSAGE;
-import static backend.academy.data.maze.CellType.WALL;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

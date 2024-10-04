@@ -1,6 +1,6 @@
-package backend.academy.service;
+package backend.academy.service.generators;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.data.maze.CellType;
 
 public interface BiomeGenerator {

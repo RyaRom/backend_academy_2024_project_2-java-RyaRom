@@ -1,4 +1,4 @@
-package backend.academy.service;
+package backend.academy.service.renderers;
 
 import java.util.List;
 

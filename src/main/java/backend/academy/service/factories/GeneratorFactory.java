@@ -1,8 +1,8 @@
 package backend.academy.service.factories;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.exception.IncorrectSettingsException;
-import backend.academy.service.Generator;
+import backend.academy.service.generators.Generator;
 import backend.academy.service.generators.KruskalGenerator;
 import backend.academy.service.generators.PrimGenerator;
 import backend.academy.service.generators.PrimitiveBiomeGenerator;

@@ -3,12 +3,11 @@ package backend.academy.game.states;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.game.GameContext;
-import backend.academy.game.GameState;
-import backend.academy.service.CliParser;
-import backend.academy.service.CliRenderer;
-import backend.academy.service.Generator;
-import backend.academy.service.MazeRenderer;
-import backend.academy.service.Solver;
+import backend.academy.service.parsers.CliParser;
+import backend.academy.service.renderers.CliRenderer;
+import backend.academy.service.generators.Generator;
+import backend.academy.service.renderers.MazeRenderer;
+import backend.academy.service.solvers.Solver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 

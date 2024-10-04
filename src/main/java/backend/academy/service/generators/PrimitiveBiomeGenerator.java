@@ -1,9 +1,8 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.data.maze.CellType;
 import backend.academy.data.maze.Point;
-import backend.academy.service.BiomeGenerator;
 import backend.academy.utils.Randomizer;
 import java.util.ArrayList;
 import java.util.List;

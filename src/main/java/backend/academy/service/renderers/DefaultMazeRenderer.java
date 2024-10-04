@@ -1,6 +1,6 @@
 package backend.academy.service.renderers;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.data.maze.Cell;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
@@ -14,7 +14,7 @@ import static backend.academy.data.maze.CellType.PASSAGE;
 import static backend.academy.data.maze.CellType.WALL;
 
 @RequiredArgsConstructor
-public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer {
+public class DefaultMazeRenderer implements MazeRenderer {
     private final GameSettings gameSettings;
 
     private final PrintStream outputWriter;

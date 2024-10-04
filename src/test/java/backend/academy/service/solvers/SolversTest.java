@@ -1,6 +1,6 @@
 package backend.academy.service.solvers;
 
-import backend.academy.data.MutableGameSettings;
+import backend.academy.data.settings.MutableGameSettings;
 import backend.academy.data.maze.CellType;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;

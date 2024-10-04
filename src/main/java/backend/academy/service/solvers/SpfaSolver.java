@@ -1,9 +1,8 @@
 package backend.academy.service.solvers;
 
-import backend.academy.data.GameSettings;
+import backend.academy.data.settings.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
-import backend.academy.service.Solver;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
