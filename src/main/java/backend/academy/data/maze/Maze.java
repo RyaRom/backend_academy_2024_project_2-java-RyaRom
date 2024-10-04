@@ -1,6 +1,5 @@
 package backend.academy.data.maze;
 
-import backend.academy.utils.Randomizer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

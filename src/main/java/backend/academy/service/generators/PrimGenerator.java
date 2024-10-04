@@ -24,6 +24,7 @@ public class PrimGenerator implements Generator {
      * @return the generated maze
      */
     @Override
+    @SuppressWarnings("MagicNumber")
     public Maze generate() {
         Maze maze = new Maze(
             gameSettings.mazeHeight(),

@@ -6,7 +6,7 @@ import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import java.io.PrintStream;
 import java.util.HashSet;
-import java.util.Queue;
+import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -32,10 +32,10 @@ public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer
     }
 
     @SneakyThrows @Override
-    public void render(Maze maze, Queue<Point> path) {
+    public void render(Maze maze, List<Point> path) {
         Set<Point> pathPoints = new HashSet<>();
-        while (!path.isEmpty()) {
-            pathPoints.add(path.poll());
+        for (Point point : path) {
+            pathPoints.add(point);
             renderWithPath(maze, pathPoints);
             Thread.sleep(gameSettings.pathRenderSpeedMs());
         }
@@ -56,6 +56,7 @@ public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer
         outputWriter.println();
     }
 
+    @SuppressWarnings("ReturnCount")
     private char getRenderForCell(Cell cell) {
         var type = cell.type();
         if (cell.coordinates().equals(gameSettings.start())) {

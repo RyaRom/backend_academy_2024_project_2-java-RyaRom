@@ -6,7 +6,9 @@ import backend.academy.data.maze.Point;
 import backend.academy.exception.PathNotFoundException;
 import backend.academy.service.Solver;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +26,10 @@ public class BfsSolver implements Solver {
      * @throws PathNotFoundException if no path is found
      */
     @Override
-    public Queue<Point> solve(Maze maze) {
+    public List<Point> solve(Maze maze) {
         Queue<State> toVisit = new ArrayDeque<>();
         Set<Point> visited = new HashSet<>();
-        toVisit.add(new State(gameSettings.start(), new ArrayDeque<>()));
+        toVisit.add(new State(gameSettings.start(), new ArrayList<>()));
 
         while (!toVisit.isEmpty()) {
             State current = toVisit.poll();
@@ -42,7 +44,7 @@ public class BfsSolver implements Solver {
 
             for (Point p : point.getPassageNeighbours(maze)) {
                 if (!visited.contains(p)) {
-                    toVisit.add(new State(p, new ArrayDeque<>(current.path)));
+                    toVisit.add(new State(p, new ArrayList<>(current.path)));
                 }
             }
         }
@@ -51,7 +53,7 @@ public class BfsSolver implements Solver {
 
     private record State(
         Point point,
-        Queue<Point> path
+        List<Point> path
     ) {
     }
 }

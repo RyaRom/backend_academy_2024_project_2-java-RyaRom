@@ -4,13 +4,11 @@ import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.Solver;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +18,27 @@ public class BellmanSolver implements Solver {
 
     private Integer[][] distances;
 
+    protected static List<Point> backtracking(Maze maze, GameSettings gameSettings, Integer[][] distances) {
+        Point current = gameSettings.end();
+        List<Point> path = new ArrayList<>();
+        Set<Point> visited = new HashSet<>();
+
+        while (!current.equals(gameSettings.start())) {
+            path.add(current);
+            visited.add(current);
+            current = current.getNeighbours(maze).stream()
+                .filter(n -> !visited.contains(n))
+                .min(Comparator.comparingInt(n -> n.getFromArray(distances)))
+                .orElse(gameSettings.start());
+        }
+        path.add(gameSettings.start());
+
+        Collections.reverse(path);
+        return path;
+    }
+
     @Override
-    public Queue<Point> solve(Maze maze) {
+    public List<Point> solve(Maze maze) {
         int height = gameSettings.mazeHeight();
         int width = gameSettings.mazeWidth();
         init();
@@ -71,22 +88,7 @@ public class BellmanSolver implements Solver {
         return updated;
     }
 
-    private Queue<Point> backtrack(Maze maze) {
-        Point current = gameSettings.end();
-        List<Point> path = new ArrayList<>();
-        Set<Point> visited = new HashSet<>();
-
-        while (!current.equals(gameSettings.start())) {
-            path.add(current);
-            visited.add(current);
-            current = current.getNeighbours(maze).stream()
-                .filter(n -> !visited.contains(n))
-                .min(Comparator.comparingInt(n -> n.getFromArray(distances)))
-                .orElse(gameSettings.start());
-        }
-        path.add(gameSettings.start());
-
-        Collections.reverse(path);
-        return new ArrayDeque<>(path);
+    private List<Point> backtrack(Maze maze) {
+        return backtracking(maze, gameSettings, distances);
     }
 }

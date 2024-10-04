@@ -3,7 +3,7 @@ package backend.academy.service;
 import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
-import java.util.Queue;
+import java.util.List;
 
 public interface MazeRenderer {
     /**
@@ -19,5 +19,5 @@ public interface MazeRenderer {
      * @param maze the maze to render
      * @param path the path to render
      */
-    void render(Maze maze, Queue<Point> path);
+    void render(Maze maze, List<Point> path);
 }

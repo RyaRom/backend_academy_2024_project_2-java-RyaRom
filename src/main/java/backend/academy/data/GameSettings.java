@@ -96,6 +96,7 @@ public final class GameSettings {
      * @return true if the settings are invalid, false otherwise
      */
     @JsonIgnore
+    @SuppressWarnings("CyclomaticComplexity")
     public boolean isInvalid() {
         return additionalTypes == null
             || pathRender == null

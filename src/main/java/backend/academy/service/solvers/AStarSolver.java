@@ -4,7 +4,7 @@ import backend.academy.data.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.Solver;
-import java.util.Queue;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -12,7 +12,7 @@ public class AStarSolver implements Solver {
     private final GameSettings gameSettings;
 
     @Override
-    public Queue<Point> solve(Maze maze) {
+    public List<Point> solve(Maze maze) {
         return null;
     }
 }

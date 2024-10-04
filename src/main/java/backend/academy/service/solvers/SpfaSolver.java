@@ -5,16 +5,12 @@ import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.Solver;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import static backend.academy.service.solvers.BellmanSolver.backtracking;
 
 @RequiredArgsConstructor
 public class SpfaSolver implements Solver {
@@ -23,7 +19,7 @@ public class SpfaSolver implements Solver {
     private Integer[][] distances;
 
     @Override
-    public Queue<Point> solve(Maze maze) {
+    public List<Point> solve(Maze maze) {
         init();
         gameSettings.start().setInArray(distances, 0);
         Queue<Point> toVisit = new ArrayDeque<>();
@@ -64,22 +60,7 @@ public class SpfaSolver implements Solver {
         }
     }
 
-    private Queue<Point> backtrack(Maze maze) {
-        Point current = gameSettings.end();
-        List<Point> path = new ArrayList<>();
-        Set<Point> visited = new HashSet<>();
-
-        while (!current.equals(gameSettings.start())) {
-            path.add(current);
-            visited.add(current);
-            current = current.getNeighbours(maze).stream()
-                .filter(n -> !visited.contains(n))
-                .min(Comparator.comparingInt(n -> n.getFromArray(distances)))
-                .orElse(gameSettings.start());
-        }
-        path.add(gameSettings.start());
-
-        Collections.reverse(path);
-        return new ArrayDeque<>(path);
+    private List<Point> backtrack(Maze maze) {
+        return backtracking(maze, gameSettings, distances);
     }
 }

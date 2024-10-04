@@ -5,10 +5,10 @@ import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.exception.PathNotFoundException;
 import backend.academy.service.Solver;
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
@@ -29,18 +29,18 @@ public class DfsSolver implements Solver {
      * @throws PathNotFoundException if no path is found
      */
     @Override
-    public Queue<Point> solve(Maze maze) {
+    public List<Point> solve(Maze maze) {
         this.maze = maze;
         visited = new HashSet<>();
         return Optional.ofNullable(dfsRec(
                 new State(
                     gameSettings.start(),
-                    new ArrayDeque<>())
+                    new ArrayList<>())
             ))
             .orElseThrow(PathNotFoundException::new);
     }
 
-    private Queue<Point> dfsRec(State current) {
+    private List<Point> dfsRec(State current) {
         Point point = current.point;
         if (visited.contains(point)) {
             return null;
@@ -54,7 +54,7 @@ public class DfsSolver implements Solver {
         }
 
         for (var neighbour : point.getPassageNeighbours(maze)) {
-            var path = dfsRec(new State(neighbour, new ArrayDeque<>(current.path)));
+            var path = dfsRec(new State(neighbour, new ArrayList<>(current.path)));
             if (path != null) {
                 return path;
             }
@@ -64,7 +64,7 @@ public class DfsSolver implements Solver {
 
     private record State(
         Point point,
-        Queue<Point> path
+        List<Point> path
     ) {
     }
 }

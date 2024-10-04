@@ -10,7 +10,6 @@ import backend.academy.service.Generator;
 import backend.academy.service.MazeRenderer;
 import backend.academy.service.Solver;
 import java.util.List;
-import java.util.Queue;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -35,7 +34,7 @@ public class InProgressState implements GameState {
     public void gameCycle(GameContext gameContext) {
         Maze maze = generator.generate();
         renderMaze(maze);
-        Queue<Point> path = solver.solve(maze);
+        List<Point> path = solver.solve(maze);
         renderPath(maze, path);
 
         cliRenderer.println("Would you like to continue?");
@@ -55,7 +54,7 @@ public class InProgressState implements GameState {
         cliRenderer.newLine();
     }
 
-    private void renderPath(Maze maze, Queue<Point> path) {
+    private void renderPath(Maze maze, List<Point> path) {
         cliRenderer.println("Generating path:");
         cliRenderer.newLine();
         mazeRenderer.render(maze, path);

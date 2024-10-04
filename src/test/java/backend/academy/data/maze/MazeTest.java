@@ -5,7 +5,6 @@ import backend.academy.service.BiomeGenerator;
 import backend.academy.service.MazeRenderer;
 import backend.academy.service.generators.PrimitiveBiomeGenerator;
 import backend.academy.service.renderers.DefaultMazeRenderer;
-import java.util.HashSet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static backend.academy.data.maze.CellType.PASSAGE;
