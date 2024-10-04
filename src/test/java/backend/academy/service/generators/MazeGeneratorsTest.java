@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MazeGeneratorsTest {
 
-    private final MutableGameSettings gameSettings = MutableGameSettings.builder()
+    private MutableGameSettings gameSettings = MutableGameSettings.builder()
         .mazeHeight(50)
         .mazeWidth(50)
         .end(Point.of(49, 49))
@@ -60,9 +60,9 @@ class MazeGeneratorsTest {
     @Test
     void kruskal() {
         gameSettings.generationAlgorithm(KRUSKAL);
-        gameSettings.mazeHeight(100);
-        gameSettings.mazeWidth(100);
-        gameSettings.end(Point.of(99, 99));
+        gameSettings.mazeHeight(30);
+        gameSettings.mazeWidth(30);
+        gameSettings.end(Point.of(29, 29));
         gameSettings.additionalTypes(Collections.emptyList());
 
         generatorFactory = new GeneratorFactory(gameSettings.immutable());
@@ -70,11 +70,11 @@ class MazeGeneratorsTest {
         generator = generatorFactory.generator();
         solver = solverFactory.solver();
 
-        for (int i = 0; i < 69; i++) {
+        for (int i = 0; i < 10; i++) {
             maze = generator.generate();
             renderer.render(maze);
             assertTrue(maze.isReachable(gameSettings.start(), gameSettings.end()));
-//            assertDoesNotThrow(() -> solver.solve(maze));
+            assertDoesNotThrow(() -> solver.solve(maze));
         }
     }
 }

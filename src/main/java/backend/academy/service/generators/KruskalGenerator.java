@@ -8,6 +8,7 @@ import backend.academy.service.Generator;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import static backend.academy.utils.Randomizer.imperfectionRandom;
 import static backend.academy.utils.Randomizer.pullRandomObject;
 
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class KruskalGenerator implements Generator {
 
     /**
      * Generates a maze using the Kruskal's algorithm.
+     *
      * @return the generated maze
      */
     @Override
@@ -60,6 +62,8 @@ public class KruskalGenerator implements Generator {
             maze.makePointReachable(end, start, biomes);
             maze.makePointReachable(start, end, biomes);
         }
+        imperfectionRandom((int) (gameSettings.biomesFreq() * 10), maze, biomes);
+
         return maze;
     }
 

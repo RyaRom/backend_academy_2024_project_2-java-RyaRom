@@ -7,6 +7,7 @@ import backend.academy.service.solvers.AStarSolver;
 import backend.academy.service.solvers.BellmanSolver;
 import backend.academy.service.solvers.BfsSolver;
 import backend.academy.service.solvers.DfsSolver;
+import backend.academy.service.solvers.SpfaSolver;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,6 +30,7 @@ public class SolverFactory {
             case A_STAR -> new AStarSolver(gameSettings);
             case DFS -> new DfsSolver(gameSettings);
             case BFS -> new BfsSolver(gameSettings);
+            case SPFA -> new SpfaSolver(gameSettings);
         };
     }
 }

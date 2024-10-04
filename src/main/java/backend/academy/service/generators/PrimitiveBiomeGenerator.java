@@ -93,8 +93,7 @@ public class PrimitiveBiomeGenerator implements BiomeGenerator {
         int width = gameSettings.mazeWidth();
         CellType cellType = getRandomWeightedObject(weighedTypes);
         biomes[point.row()][point.col()] = cellType;
-        int bound = Integer.parseInt(
-            Randomizer.getRandomInt((int) (((double) (height * width) / 30) * gameSettings.biomesFreq()) + 1));
+        int bound = Randomizer.getRandomInt((int) (((double) (height * width) / 30) * gameSettings.biomesFreq()) + 1);
         List<Point> neighbours = getEmptyNeighbours(point.row(), point.col(), biomes);
 
         while (!neighbours.isEmpty() && bound > 0) {

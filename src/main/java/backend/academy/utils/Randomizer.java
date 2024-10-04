@@ -1,5 +1,8 @@
 package backend.academy.utils;
 
+import backend.academy.data.maze.CellType;
+import backend.academy.data.maze.Maze;
+import backend.academy.data.maze.Point;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,14 +95,33 @@ public class Randomizer {
      *
      * @return random int from 0 to bound
      */
-    public static String getRandomInt(int bound) {
-        return String.valueOf(RANDOM.nextInt(bound));
+    public static int getRandomInt(int bound) {
+        return RANDOM.nextInt(bound);
     }
 
+    /**
+     * Returns a random double from origin to bound
+     *
+     * @return random double from origin to bound
+     */
     public static Double getRandomDouble(double origin, double bound) {
         if (bound <= 0.0) {
             return 0.0;
         }
         return RANDOM.nextDouble(origin, bound);
+    }
+
+    /**
+     * Makes random points in maze passage to generate more possible solutions
+     *
+     * @param bound approximate number of imperfections
+     * @param maze  maze to imperfection
+     * @param biome maze biomes
+     */
+    public static void imperfectionRandom(int bound, Maze maze, CellType[][] biome) {
+        for (int i = 0; i < bound; i++) {
+            Point point = maze.getRandomPoint();
+            maze.setCellBiomeType(point, biome);
+        }
     }
 }

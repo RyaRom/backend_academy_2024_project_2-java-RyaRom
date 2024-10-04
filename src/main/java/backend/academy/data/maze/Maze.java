@@ -1,9 +1,11 @@
 package backend.academy.data.maze;
 
+import backend.academy.utils.Randomizer;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import static backend.academy.data.maze.CellType.WALL;
+import static backend.academy.utils.Randomizer.getRandomInt;
 import static backend.academy.utils.Randomizer.pullRandomObject;
 
 /**
@@ -136,4 +138,12 @@ public record Maze(int height, int width, Cell[][] grid) {
             .count() == 1;
     }
 
+    /**
+     * Get a random point from maze
+     *
+     * @return a random point
+     */
+    public Point getRandomPoint() {
+        return Point.of(getRandomInt(height), getRandomInt(width));
+    }
 }

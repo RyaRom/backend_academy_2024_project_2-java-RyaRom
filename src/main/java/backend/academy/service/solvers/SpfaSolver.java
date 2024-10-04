@@ -8,41 +8,36 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class BellmanSolver implements Solver {
+public class SpfaSolver implements Solver {
     private final GameSettings gameSettings;
 
     private Integer[][] distances;
 
     @Override
     public Queue<Point> solve(Maze maze) {
-        int height = gameSettings.mazeHeight();
-        int width = gameSettings.mazeWidth();
         init();
         gameSettings.start().setInArray(distances, 0);
+        Queue<Point> toVisit = new ArrayDeque<>();
+        Map<Point, Integer> relaxed = new HashMap<>();
+        toVisit.add(gameSettings.start());
 
-        for (int i = 0; i < height * width - 1; i++) {
-            boolean updated = false;
-
-            for (int j = 0; j < height; j++) {
-                for (int k = 0; k < width; k++) {
-                    if (distances[j][k] == Integer.MAX_VALUE) {
-                        continue;
-                    }
-                    Point point = new Point(j, k);
-                    updated = updated || relax(point, maze);
-                }
+        while (!toVisit.isEmpty()) {
+            Point current = toVisit.poll();
+            relaxed.putIfAbsent(current, 0);
+            if (relaxed.get(current) > gameSettings.mazeWidth() * gameSettings.mazeHeight()) {
+                continue;
             }
-
-            if (!updated) {
-                break;
-            }
+            relaxed.put(current, relaxed.get(current) + 1);
+            relax(current, maze, toVisit);
         }
         return backtrack(maze);
     }
@@ -58,17 +53,15 @@ public class BellmanSolver implements Solver {
         }
     }
 
-    private boolean relax(Point point, Maze maze) {
-        boolean updated = false;
+    private void relax(Point point, Maze maze, Queue<Point> toVisit) {
         for (var neighbour : point.getPassageNeighbours(maze)) {
             int newCost = point.getFromArray(distances) + maze.getCell(neighbour).type().cost();
             int oldCost = neighbour.getFromArray(distances);
             if (newCost < oldCost) {
                 neighbour.setInArray(distances, newCost);
-                updated = true;
+                toVisit.add(neighbour);
             }
         }
-        return updated;
     }
 
     private Queue<Point> backtrack(Maze maze) {

@@ -8,6 +8,7 @@ import backend.academy.service.Generator;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import static backend.academy.utils.Randomizer.imperfectionRandom;
 import static backend.academy.utils.Randomizer.pullRandomObject;
 
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class PrimGenerator implements Generator {
 
     /**
      * Generates a maze using the Prim algorithm
+     * Maze is "perfect" but making finish reachable can make it imperfect
      *
      * @return the generated maze
      */
@@ -45,7 +47,9 @@ public class PrimGenerator implements Generator {
             maze.addNeighbours(toVisit, current);
         }
         maze.makePointReachable(end, start, biomes);
+        imperfectionRandom((int) (gameSettings.biomesFreq() * 10), maze, biomes);
 
         return maze;
     }
+
 }
