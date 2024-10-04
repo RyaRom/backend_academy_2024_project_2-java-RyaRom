@@ -25,7 +25,7 @@ public class GeneratorFactory {
 
         return switch (gameSettings.generationAlgorithm()) {
             case PRIM -> new PrimGenerator(gameSettings, new PrimitiveBiomeGenerator(gameSettings));
-            case KRUSKAL -> new KruskalGenerator(gameSettings);
+            case KRUSKAL -> new KruskalGenerator(gameSettings, new PrimitiveBiomeGenerator(gameSettings));
         };
     }
 }

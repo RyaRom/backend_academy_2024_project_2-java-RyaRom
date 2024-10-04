@@ -37,14 +37,14 @@ public class PrimGenerator implements Generator {
 
         while (!toVisit.isEmpty()) {
             Point current = pullRandomObject(toVisit);
-            if (!maze.checkCellNeighbour(current)) {
+            if (!maze.isOneNeighbourPassage(current)) {
                 continue;
             }
 
             maze.setCellBiomeType(current, biomes);
             maze.addNeighbours(toVisit, current);
         }
-        maze.makePointReachable(end, start);
+        maze.makePointReachable(end, start, biomes);
 
         return maze;
     }

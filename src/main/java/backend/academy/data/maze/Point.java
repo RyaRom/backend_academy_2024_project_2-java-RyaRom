@@ -97,4 +97,12 @@ public record Point(int row, int col) {
             .filter(p -> maze.getCell(p).type().isPassage())
             .toList();
     }
+
+    public <T> void setInArray(T[][] array, T val) {
+        array[row][col] = val;
+    }
+
+    public <T> T getFromArray(T[][] array) {
+        return array[row][col];
+    }
 }

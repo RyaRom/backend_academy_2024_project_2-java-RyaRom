@@ -3,7 +3,6 @@ package backend.academy.data.maze;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import static backend.academy.data.maze.CellType.PASSAGE;
 import static backend.academy.data.maze.CellType.WALL;
 import static backend.academy.utils.Randomizer.pullRandomObject;
 
@@ -63,24 +62,22 @@ public record Maze(int height, int width, Cell[][] grid) {
      * @param biomes the biomes to choose from
      */
     public void setCellBiomeType(Point point, CellType[][] biomes) {
-        grid[point.row()][point.col()] = new Cell(
-            point, biomes[point.row()][point.col()]
-        );
+        setCell(point, biomes[point.row()][point.col()]);
     }
 
     /**
-     * Make a point reachable from the start point
+     * Make a point reachable from the start
      *
      * @param point the point to make reachable
      * @param start the start point
      */
-    public void makePointReachable(Point point, Point start) {
-        setCell(point, PASSAGE);
+    public void makePointReachable(Point point, Point start, CellType[][] biomes) {
+        setCellBiomeType(point, biomes);
         List<Point> neighbours = point.getNeighbours(this);
         Point current = point;
-        while (!checkIfReachable(current, start, new HashSet<>())) {
+        while (!neighbours.isEmpty() && !isReachable(current, start, new HashSet<>())) {
             current = pullRandomObject(neighbours);
-            setCell(current, PASSAGE);
+            setCellBiomeType(current, biomes);
             addNeighbours(neighbours, current);
         }
     }
@@ -92,17 +89,26 @@ public record Maze(int height, int width, Cell[][] grid) {
      * @param start   the start point
      * @return true if the point is reachable, false otherwise
      */
-    public boolean checkIfReachable(Point current, Point start, Set<Point> visited) {
+    public boolean isReachable(Point current, Point start) {
+        if (!getCell(current).type().isPassage() || !getCell(start).type().isPassage()) {
+            return false;
+        }
+        return isReachable(current, start, new HashSet<>());
+    }
+
+    private boolean isReachable(Point current, Point start, Set<Point> visited) {
         if (start.equals(current)) {
             return true;
         }
         visited.add(current);
 
-        return current.getNeighbours(this).stream()
-            .filter(n -> getCell(n).type().isPassage()
-                && !visited.contains(n))
-            .map(n -> checkIfReachable(n, start, visited))
-            .reduce((a, b) -> a || b).orElse(false);
+        boolean res = false;
+        for (var neighbour : current.getPassageNeighbours(this)) {
+            if (!visited.contains(neighbour)) {
+                res |= isReachable(neighbour, start, visited);
+            }
+        }
+        return res;
     }
 
     /**
@@ -123,7 +129,7 @@ public record Maze(int height, int width, Cell[][] grid) {
      * @param point the cell
      * @return true if the cell has exactly one neighbour passage, false otherwise
      */
-    public boolean checkCellNeighbour(Point point) {
+    public boolean isOneNeighbourPassage(Point point) {
         return point.getNeighbours(this).stream()
             .map(this::getCell)
             .filter(c -> c.type().isPassage())

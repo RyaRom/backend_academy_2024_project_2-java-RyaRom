@@ -7,10 +7,11 @@ import backend.academy.service.Generator;
 import backend.academy.service.MazeRenderer;
 import backend.academy.service.Solver;
 import backend.academy.service.factories.GeneratorFactory;
+import backend.academy.service.factories.SolverFactory;
 import backend.academy.service.renderers.DefaultMazeRenderer;
-import backend.academy.service.solvers.BfsSolver;
-import java.util.HashSet;
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
+import static backend.academy.data.enums.MazeGenerationAlgorithm.KRUSKAL;
 import static backend.academy.data.enums.MazeGenerationAlgorithm.PRIM;
 import static backend.academy.data.enums.PathfindingAlgorithm.BFS;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -26,27 +27,54 @@ class MazeGeneratorsTest {
         .pathfindingAlgorithm(BFS)
         .build();
 
-    private final Solver solver = new BfsSolver(gameSettings.immutable());
-
     private final MazeRenderer renderer = new DefaultMazeRenderer(gameSettings.immutable(), System.out);
 
     private Maze maze;
+
+    private GeneratorFactory generatorFactory;
+
+    private SolverFactory solverFactory;
+
+    private Solver solver;
 
     private Generator generator;
 
     @Test
     void prim() {
         gameSettings.generationAlgorithm(PRIM);
-        GeneratorFactory factory = new GeneratorFactory(gameSettings.immutable());
-        generator = factory.generator();
+        generatorFactory = new GeneratorFactory(gameSettings.immutable());
+        solverFactory = new SolverFactory(gameSettings.immutable());
+        generator = generatorFactory.generator();
+        solver = solverFactory.solver();
 
         for (int i = 0; i < 100; i++) {
             maze = generator.generate();
-            assertTrue(maze.checkIfReachable(gameSettings.start(), gameSettings.end(), new HashSet<>()));
+            assertTrue(maze.isReachable(gameSettings.start(), gameSettings.end()));
             assertDoesNotThrow(() -> solver.solve(maze));
             if (i % 10 == 0) {
                 renderer.render(maze);
             }
+        }
+    }
+
+    @Test
+    void kruskal() {
+        gameSettings.generationAlgorithm(KRUSKAL);
+        gameSettings.mazeHeight(100);
+        gameSettings.mazeWidth(100);
+        gameSettings.end(Point.of(99, 99));
+        gameSettings.additionalTypes(Collections.emptyList());
+
+        generatorFactory = new GeneratorFactory(gameSettings.immutable());
+        solverFactory = new SolverFactory(gameSettings.immutable());
+        generator = generatorFactory.generator();
+        solver = solverFactory.solver();
+
+        for (int i = 0; i < 69; i++) {
+            maze = generator.generate();
+            renderer.render(maze);
+            assertTrue(maze.isReachable(gameSettings.start(), gameSettings.end()));
+//            assertDoesNotThrow(() -> solver.solve(maze));
         }
     }
 }
