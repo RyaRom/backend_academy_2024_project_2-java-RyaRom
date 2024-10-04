@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import static backend.academy.data.enums.MazeGenerationAlgorithm.PRIM;
-import static backend.academy.data.enums.PathfindingAlgorithm.BELLMAN;
+import static backend.academy.data.enums.PathfindingAlgorithm.SPFA;
 import static lombok.Builder.Default;
 
 /**
@@ -72,7 +72,7 @@ public final class GameSettings {
 
     @JsonProperty
     @Default
-    private final PathfindingAlgorithm pathfindingAlgorithm = BELLMAN;
+    private final PathfindingAlgorithm pathfindingAlgorithm = SPFA;
 
     @JsonProperty
     @Default

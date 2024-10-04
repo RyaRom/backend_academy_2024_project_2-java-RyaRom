@@ -13,9 +13,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Consumer;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import static backend.academy.utils.Randomizer.getRandomInt;
 
+@Getter
 @SuppressWarnings("MultipleStringLiterals")
 @RequiredArgsConstructor
 public final class SettingsFileHandler {
@@ -38,6 +40,8 @@ public final class SettingsFileHandler {
         configureSingleCharacter("pathRender", gameSettings::pathRender);
         configureSingleCharacter("wallRender", gameSettings::wallRender);
         configureSingleCharacter("passageRender", gameSettings::passageRender);
+        configureSingleCharacter("start", gameSettings::startRender);
+        configureSingleCharacter("end", gameSettings::endRender);
         configureGenAlgorithm();
         configurePathAlgorithm();
         configureStartPoint();

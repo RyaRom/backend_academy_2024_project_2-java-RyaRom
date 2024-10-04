@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import static backend.academy.data.GameSettings.DEFAULT_SETTINGS;
 import static lombok.Builder.Default;
 
@@ -18,6 +19,7 @@ import static lombok.Builder.Default;
 @Getter
 @Setter
 @Builder
+@ToString
 @EqualsAndHashCode
 public final class MutableGameSettings {
     @Default
