@@ -18,9 +18,6 @@ import static backend.academy.utils.Randomizer.getRandomWeightedObject;
 public class PrimitiveBiomeGenerator implements BiomeGenerator {
     private final GameSettings gameSettings;
 
-    //TODO: add this to game settings or add prob map in additional types in settings
-    private final Double biomesFreq = 2.0;
-
     private Map<CellType, Double> weighedTypes;
 
     @Override
@@ -32,7 +29,7 @@ public class PrimitiveBiomeGenerator implements BiomeGenerator {
             .distinct()
             .toList();
         weighedTypes = types.stream()
-            .collect(Collectors.toMap(type -> type, prob -> getRandomDouble(0.0, biomesFreq)));
+            .collect(Collectors.toMap(type -> type, prob -> getRandomDouble(0.0, gameSettings.biomesFreq())));
         weighedTypes.put(PASSAGE, 2.0);
 
         var biomes = new CellType[gameSettings.mazeHeight()][gameSettings.mazeWidth()];
@@ -82,7 +79,7 @@ public class PrimitiveBiomeGenerator implements BiomeGenerator {
         CellType cellType = getRandomWeightedObject(weighedTypes);
         biomes[point.row()][point.col()] = cellType;
         int bound = Integer.parseInt(
-            Randomizer.getRandomInt((int) (((double) (height * width) / 30) * biomesFreq) + 1));
+            Randomizer.getRandomInt((int) (((double) (height * width) / 30) * gameSettings.biomesFreq()) + 1));
         List<Point> neighbours = getEmptyNeighbours(point.row(), point.col(), biomes);
 
         while (!neighbours.isEmpty() && bound > 0) {

@@ -76,6 +76,10 @@ public final class GameSettings {
     @Default
     private final Point end = Point.of(1, 1);
 
+    @JsonProperty
+    @Default
+    private final Double biomesFreq = 1.0;
+
     /**
      * Validates the game settings
      *
@@ -91,6 +95,7 @@ public final class GameSettings {
             || start.row() >= mazeHeight()
             || end.col() >= mazeWidth()
             || end.row() >= mazeHeight()
-            || start.equals(end);
+            || start.equals(end)
+            || biomesFreq < 0.0;
     }
 }

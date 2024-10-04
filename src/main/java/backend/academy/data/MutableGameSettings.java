@@ -53,6 +53,9 @@ public final class MutableGameSettings {
     @Default
     private Point end = DEFAULT_SETTINGS.end();
 
+    @Default
+    private Double biomesFreq = DEFAULT_SETTINGS.biomesFreq();
+
     public GameSettings immutable() {
         return GameSettings.builder()
             .additionalTypes(additionalTypes)
@@ -66,6 +69,7 @@ public final class MutableGameSettings {
             .pathRenderSpeedMs(pathRenderSpeedMs)
             .start(start)
             .end(end)
+            .biomesFreq(biomesFreq)
             .build();
     }
 }

@@ -34,6 +34,7 @@ public final class SettingsFileHandler {
         configureDigit("maze height", gameSettings::mazeHeight);
         configureDigit("maze width", gameSettings::mazeWidth);
         configureDigit("path render speed in ms", gameSettings::pathRenderSpeedMs);
+        configureDouble("biomes frequency (2.0 is optimal max here)", gameSettings::biomesFreq);
         configureSingleCharacter("pathRender", gameSettings::pathRender);
         configureSingleCharacter("wallRender", gameSettings::wallRender);
         configureSingleCharacter("passageRender", gameSettings::passageRender);
@@ -46,10 +47,22 @@ public final class SettingsFileHandler {
 
     private void configureDigit(String name, Consumer<Integer> setter) {
         renderer.println("Enter %s (leave blank for default):%n".formatted(name));
-        var input = parser.read("\\d*");
+        var input = parser.read("^\\d*");
         if (!input.isBlank()) {
             try {
                 setter.accept(Integer.parseInt(input));
+            } catch (NumberFormatException e) {
+                renderer.println("Invalid input. Default will be used.");
+            }
+        }
+    }
+
+    private void configureDouble(String name, Consumer<Double> setter) {
+        renderer.println("Enter %s (leave blank for default):%n".formatted(name));
+        var input = parser.read("^(\\d+(\\.\\d*)?)|\\s*$");
+        if (!input.isBlank()) {
+            try {
+                setter.accept(Double.parseDouble(input));
             } catch (NumberFormatException e) {
                 renderer.println("Invalid input. Default will be used.");
             }
