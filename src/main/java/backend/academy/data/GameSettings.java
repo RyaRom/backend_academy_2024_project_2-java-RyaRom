@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import static backend.academy.data.enums.MazeGenerationAlgorithm.PRIM;
 import static backend.academy.data.enums.PathfindingAlgorithm.BELLMAN;
@@ -25,6 +26,7 @@ import static lombok.Builder.Default;
 @Getter
 @Builder
 @EqualsAndHashCode
+@ToString
 @Accessors(fluent = true)
 public final class GameSettings {
     public static final GameSettings DEFAULT_SETTINGS = builder().build();
@@ -32,7 +34,7 @@ public final class GameSettings {
     @JsonProperty
     @Default
     private final List<CellType> additionalTypes = List.of(
-        new CellType(true, 5, '▓'),
+        new CellType(true, 5, '░'),
         new CellType(true, -10, '₿')
     );
 
@@ -46,7 +48,15 @@ public final class GameSettings {
 
     @JsonProperty
     @Default
-    private final Character passageRender = '░';
+    private final Character passageRender = ' ';
+
+    @JsonProperty
+    @Default
+    private final Character startRender = 'S';
+
+    @JsonProperty
+    @Default
+    private final Character endRender = 'F';
 
     @JsonProperty
     @Default
@@ -87,7 +97,21 @@ public final class GameSettings {
      */
     @JsonIgnore
     public boolean isInvalid() {
-        return mazeHeight() < 1
+        return additionalTypes == null
+            || pathRender == null
+            || wallRender == null
+            || passageRender == null
+            || startRender == null
+            || endRender == null
+            || generationAlgorithm == null
+            || pathfindingAlgorithm == null
+            || mazeHeight == null
+            || mazeWidth == null
+            || start == null
+            || end == null
+            || biomesFreq == null
+            || pathRenderSpeedMs == null
+            || mazeHeight() < 1
             || mazeWidth() < 1
             || start.col() < 0 || start.row() < 0
             || end.col() < 0 || end.row() < 0

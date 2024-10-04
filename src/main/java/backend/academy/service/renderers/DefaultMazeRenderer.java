@@ -58,6 +58,12 @@ public class DefaultMazeRenderer implements backend.academy.service.MazeRenderer
 
     private char getRenderForCell(Cell cell) {
         var type = cell.type();
+        if (cell.coordinates().equals(gameSettings.start())) {
+            return gameSettings.startRender();
+        }
+        if (cell.coordinates().equals(gameSettings.end())) {
+            return gameSettings.endRender();
+        }
         if (type.equals(PASSAGE)) {
             return gameSettings.passageRender();
         }

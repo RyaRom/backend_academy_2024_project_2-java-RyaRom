@@ -33,6 +33,12 @@ public final class MutableGameSettings {
     private Character passageRender = DEFAULT_SETTINGS.passageRender();
 
     @Default
+    private Character startRender = DEFAULT_SETTINGS.startRender();
+
+    @Default
+    private Character endRender = DEFAULT_SETTINGS.endRender();
+
+    @Default
     private Integer mazeHeight = DEFAULT_SETTINGS.mazeHeight();
 
     @Default
@@ -70,6 +76,8 @@ public final class MutableGameSettings {
             .start(start)
             .end(end)
             .biomesFreq(biomesFreq)
+            .startRender(startRender)
+            .endRender(endRender)
             .build();
     }
 }

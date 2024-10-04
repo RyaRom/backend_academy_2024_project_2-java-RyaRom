@@ -21,7 +21,8 @@ public class PrimitiveBiomeGenerator implements BiomeGenerator {
     private Map<CellType, Double> weighedTypes;
 
     /**
-     * Generates biomes with simple custom algorithm, for each cell grows random biome based on frequency map
+     * Generates biomes with simple custom algorithm,
+     * for each cell grows random biome based on frequency map
      * <p>
      * Generates frequency map from {@code gameSettings.additionalTypes()} values
      * based on {@code gameSettings.biomesFreq()}
