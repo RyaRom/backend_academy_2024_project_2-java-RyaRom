@@ -97,6 +97,9 @@ public class Randomizer {
     }
 
     public static Double getRandomDouble(double origin, double bound) {
+        if (bound <= 0.0) {
+            return 0.0;
+        }
         return RANDOM.nextDouble(origin, bound);
     }
 }

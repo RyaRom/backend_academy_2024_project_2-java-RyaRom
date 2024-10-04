@@ -28,7 +28,6 @@ public class JsonParser<T> implements FileParser<T> {
             mapper.writeValue(file, data);
         } catch (Exception e) {
             log.error("Error saving word list to file", e);
-            throw new RuntimeException(e);
         }
     }
 

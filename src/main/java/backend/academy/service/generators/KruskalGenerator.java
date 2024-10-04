@@ -20,6 +20,10 @@ public class KruskalGenerator implements Generator {
 
     private Integer[][] weights;
 
+    /**
+     * Generates a maze using the Kruskal's algorithm.
+     * @return the generated maze
+     */
     @Override
     public Maze generate() {
         Maze maze = new Maze(

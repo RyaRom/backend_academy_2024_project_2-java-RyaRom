@@ -32,4 +32,6 @@ public interface CliRenderer {
     void clearScreen();
 
     void println(String message);
+
+    void newLine();
 }

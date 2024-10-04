@@ -96,6 +96,7 @@ public final class GameSettings {
             || end.col() >= mazeWidth()
             || end.row() >= mazeHeight()
             || start.equals(end)
-            || biomesFreq < 0.0;
+            || biomesFreq < 0.0
+            || pathRenderSpeedMs < 0;
     }
 }

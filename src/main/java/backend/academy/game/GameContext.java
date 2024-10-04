@@ -1,6 +1,5 @@
 package backend.academy.game;
 
-import backend.academy.data.GameSettings;
 import backend.academy.game.states.PreparationState;
 import backend.academy.service.parsers.DefaultCliParser;
 import backend.academy.service.parsers.JsonParser;
@@ -15,10 +14,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import static backend.academy.data.GameSettings.DEFAULT_SETTINGS;
+import lombok.extern.log4j.Log4j2;
 
 @Getter
 @Setter
+@Log4j2
 @RequiredArgsConstructor
 public class GameContext {
     public static final File SETTINGS_LOCATION = new File("src/main/resources/settings/");
@@ -49,9 +49,8 @@ public class GameContext {
 
     private boolean terminate = false;
 
-    private GameSettings gameSettings = DEFAULT_SETTINGS;
-
     public void init() {
+        log.info("Game is started");
         state = new PreparationState(
             new DefaultCliRenderer(outputWriter),
             new DefaultCliParser(inputReader, outputWriter),
@@ -62,6 +61,7 @@ public class GameContext {
     }
 
     @SneakyThrows public void exit() {
+        log.info("Game is finished");
         inputReader.close();
         outputWriter.close();
         terminate = true;

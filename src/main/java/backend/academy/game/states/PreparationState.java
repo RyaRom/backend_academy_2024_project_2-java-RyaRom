@@ -20,6 +20,12 @@ import static backend.academy.data.GameSettings.DEFAULT_SETTINGS;
 import static backend.academy.game.GameContext.SETTINGS_MENU;
 import static backend.academy.game.GameContext.START_MENU;
 
+/**
+ * This class is representing preparation state of the game
+ * <p>
+ * This state is used to load settings,create game configuration and validate chosen settings
+ * </p>
+ */
 @RequiredArgsConstructor
 @Log4j2
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
@@ -42,11 +48,11 @@ public class PreparationState implements GameState {
         if (gameContext.terminate()) {
             return;
         }
+        renderer.renderIntro();
+        renderer.renderMenu(START_MENU);
         if (gameSettings.isInvalid()) {
             renderer.println(SETTINGS_ERROR);
         }
-        renderer.renderIntro();
-        renderer.renderMenu(START_MENU);
 
         int command = parser.readCommand(0, START_MENU.size());
         switch (command) {
@@ -74,7 +80,7 @@ public class PreparationState implements GameState {
             case 0 -> gameCycle(gameContext);
             case 1 -> gameSettings = DEFAULT_SETTINGS;
             default -> {
-                String chosenPath = settingsLocation + allSettings.get(menuChoice - 1);
+                String chosenPath = settingsLocation + "/" + allSettings.get(menuChoice - 1);
                 log.info("Adding words from JSON file: {}", chosenPath);
                 gameSettings = fileParser.readFromFile(new File(chosenPath), GameSettings.class);
             }
@@ -106,6 +112,7 @@ public class PreparationState implements GameState {
             gameCycle(gameContext);
             return;
         }
+        log.info("Game settings is {}. Game is configured", gameSettings.toString());
         GeneratorFactory generatorFactory = new GeneratorFactory(gameSettings);
         SolverFactory solverFactory = new SolverFactory(gameSettings);
 

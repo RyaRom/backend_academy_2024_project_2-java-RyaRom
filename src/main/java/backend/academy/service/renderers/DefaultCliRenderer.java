@@ -71,4 +71,9 @@ public class DefaultCliRenderer implements CliRenderer {
     public void println(String message) {
         outputWriter.println(message);
     }
+
+    @Override
+    public void newLine() {
+        outputWriter.println();
+    }
 }
