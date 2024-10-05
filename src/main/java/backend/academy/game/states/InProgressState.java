@@ -42,7 +42,7 @@ public class InProgressState implements GameState {
         if (menuChoice == 1) {
             gameContext.exit();
         } else {
-            gameContext.init();
+            nextState(gameContext);
         }
     }
 
@@ -61,6 +61,6 @@ public class InProgressState implements GameState {
 
     @Override
     public void nextState(GameContext gameContext) {
-
+        gameContext.init();
     }
 }

@@ -93,6 +93,7 @@ public class PreparationState implements GameState {
         gameCycle(gameContext);
     }
 
+    @SuppressWarnings("ReturnCount")
     private void loadSettingsCreator(GameContext gameContext, FileHandler settingsFileHandler) {
         renderer.renderMenu(SETTINGS_MENU);
 

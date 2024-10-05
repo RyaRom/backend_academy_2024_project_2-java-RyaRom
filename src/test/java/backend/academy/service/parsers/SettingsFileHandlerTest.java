@@ -1,11 +1,8 @@
-package backend.academy.game;
+package backend.academy.service.parsers;
 
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.gameSettings.MutableGameSettings;
 import backend.academy.data.maze.CellType;
-import backend.academy.service.parsers.CliParser;
-import backend.academy.service.parsers.FileParser;
-import backend.academy.service.parsers.SettingsFileHandler;
 import backend.academy.service.renderers.CliRenderer;
 import java.io.File;
 import java.util.List;
@@ -107,8 +104,6 @@ class SettingsFileHandlerTest {
         settingsFileHandler.createSettings();
 
         verify(renderer, atLeastOnce()).println(contains("Invalid algorithm. Default will be used."));
-        System.out.println(settingsFileHandler.gameSettings());
-        System.out.println(MutableGameSettings.builder().build());
         assertEquals(MutableGameSettings.builder().build(), settingsFileHandler.gameSettings());
     }
 
