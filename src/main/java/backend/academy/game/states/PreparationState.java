@@ -2,13 +2,15 @@ package backend.academy.game.states;
 
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.game.GameContext;
-import backend.academy.game.SettingsFileHandler;
-import backend.academy.service.parsers.CliParser;
-import backend.academy.service.renderers.CliRenderer;
-import backend.academy.service.parsers.FileParser;
+import backend.academy.service.factories.FileHandlerFactory;
 import backend.academy.service.factories.GeneratorFactory;
 import backend.academy.service.factories.SolverFactory;
+import backend.academy.service.parsers.CliParser;
+import backend.academy.service.parsers.FileHandler;
+import backend.academy.service.parsers.FileParser;
+import backend.academy.service.renderers.CliRenderer;
 import backend.academy.service.renderers.DefaultMazeRenderer;
+import backend.academy.service.renderers.MazeRenderer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +31,7 @@ import static backend.academy.game.GameContext.START_MENU;
 @Log4j2
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class PreparationState implements GameState {
-    private final static String SETTINGS_ERROR = "Invalid settings, load new settings or set back to default";
+    public final static String SETTINGS_ERROR = "Invalid settings, load new settings or set back to default";
 
     private final CliRenderer renderer;
 
@@ -38,6 +40,8 @@ public class PreparationState implements GameState {
     private final FileParser<GameSettings> fileParser;
 
     private final File settingsLocation;
+
+    private final FileHandlerFactory fileHandlerFactory;
 
     private GameSettings gameSettings = DEFAULT_SETTINGS;
 
@@ -59,9 +63,8 @@ public class PreparationState implements GameState {
             case 1 -> nextState(gameContext);
             case 2 -> loadSettingsSelector(gameContext);
             case 3 -> {
-                SettingsFileHandler settingsFileHandler = new SettingsFileHandler(
-                    parser, renderer, fileParser
-                );
+                FileHandler settingsFileHandler =
+                    fileHandlerFactory.fileHandler(parser, renderer, fileParser);
                 loadSettingsCreator(gameContext, settingsFileHandler);
             }
             default -> throw new IllegalStateException("Unexpected value: " + command);
@@ -76,7 +79,10 @@ public class PreparationState implements GameState {
 
         int menuChoice = parser.readCommand(0, allSettings.size());
         switch (menuChoice) {
-            case 0 -> gameCycle(gameContext);
+            case 0 -> {
+                gameCycle(gameContext);
+                return;
+            }
             case 1 -> gameSettings = DEFAULT_SETTINGS;
             default -> {
                 String chosenPath = settingsLocation + "/" + allSettings.get(menuChoice - 1);
@@ -87,12 +93,15 @@ public class PreparationState implements GameState {
         gameCycle(gameContext);
     }
 
-    private void loadSettingsCreator(GameContext gameContext, SettingsFileHandler settingsFileHandler) {
+    private void loadSettingsCreator(GameContext gameContext, FileHandler settingsFileHandler) {
         renderer.renderMenu(SETTINGS_MENU);
 
         int menuChoice = parser.readCommand(0, SETTINGS_MENU.size());
         switch (menuChoice) {
-            case 0 -> gameCycle(gameContext);
+            case 0 -> {
+                gameCycle(gameContext);
+                return;
+            }
             case 1 -> settingsFileHandler.createSettings();
             case 2 -> settingsFileHandler.changeName();
             case 3 -> {
@@ -114,15 +123,13 @@ public class PreparationState implements GameState {
         log.info("Game settings is {}. Game is configured", gameSettings.toString());
         GeneratorFactory generatorFactory = new GeneratorFactory(gameSettings);
         SolverFactory solverFactory = new SolverFactory(gameSettings);
+        MazeRenderer mazeRenderer = new DefaultMazeRenderer(gameSettings, gameContext.outputWriter());
 
-        InProgressState newState = new InProgressState(
+        gameContext.start(solverFactory.solver(),
+            generatorFactory.generator(),
             renderer,
             parser,
-            new DefaultMazeRenderer(gameSettings, gameContext.outputWriter()),
-            generatorFactory.generator(),
-            solverFactory.solver()
+            mazeRenderer
         );
-        gameContext.state(newState);
-        gameContext.state().gameCycle(gameContext);
     }
 }

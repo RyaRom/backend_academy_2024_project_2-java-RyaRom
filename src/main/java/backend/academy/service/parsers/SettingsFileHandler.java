@@ -1,14 +1,12 @@
-package backend.academy.game;
+package backend.academy.service.parsers;
 
-import backend.academy.data.gameSettings.GameSettings;
-import backend.academy.data.gameSettings.MutableGameSettings;
 import backend.academy.data.enums.MazeGenerationAlgorithm;
 import backend.academy.data.enums.PathfindingAlgorithm;
+import backend.academy.data.gameSettings.GameSettings;
+import backend.academy.data.gameSettings.MutableGameSettings;
 import backend.academy.data.maze.CellType;
 import backend.academy.data.maze.Point;
-import backend.academy.service.parsers.CliParser;
 import backend.academy.service.renderers.CliRenderer;
-import backend.academy.service.parsers.FileParser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +18,7 @@ import static backend.academy.utils.Randomizer.getRandomInt;
 @Getter
 @SuppressWarnings("MultipleStringLiterals")
 @RequiredArgsConstructor
-public final class SettingsFileHandler {
+public class SettingsFileHandler implements FileHandler {
     private final CliParser parser;
 
     private final CliRenderer renderer;
@@ -32,7 +30,7 @@ public final class SettingsFileHandler {
     @SuppressWarnings("MagicNumber")
     private String name = String.valueOf(getRandomInt(100000));
 
-    public void createSettings() {
+    @Override public void createSettings() {
         configureDigit("maze height", gameSettings::mazeHeight);
         configureDigit("maze width", gameSettings::mazeWidth);
         configureDigit("path render speed in ms", gameSettings::pathRenderSpeedMs);
@@ -169,7 +167,7 @@ public final class SettingsFileHandler {
         }
     }
 
-    public void changeName() {
+    @Override public void changeName() {
         renderer.println("Enter new file name:");
         String newName = parser.read("[a-zA-Z]*");
         if (!newName.isBlank()) {
@@ -177,7 +175,7 @@ public final class SettingsFileHandler {
         }
     }
 
-    public void save(String path) {
+    @Override public void save(String path) {
         File newJson = new File(
             path + "/" + name + "_settings.json"
         );

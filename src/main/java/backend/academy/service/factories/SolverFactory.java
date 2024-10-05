@@ -2,11 +2,11 @@ package backend.academy.service.factories;
 
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.exception.IncorrectSettingsException;
-import backend.academy.service.solvers.Solver;
 import backend.academy.service.solvers.AStarSolver;
 import backend.academy.service.solvers.BellmanSolver;
 import backend.academy.service.solvers.BfsSolver;
 import backend.academy.service.solvers.DfsSolver;
+import backend.academy.service.solvers.Solver;
 import backend.academy.service.solvers.SpfaSolver;
 import lombok.RequiredArgsConstructor;
 
