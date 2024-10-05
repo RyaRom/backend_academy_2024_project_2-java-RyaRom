@@ -1,6 +1,6 @@
 package backend.academy.game.states;
 
-import backend.academy.data.settings.GameSettings;
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.game.GameContext;
 import backend.academy.game.SettingsFileHandler;
 import backend.academy.service.parsers.CliParser;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.data.settings.GameSettings.DEFAULT_SETTINGS;
+import static backend.academy.data.gameSettings.GameSettings.DEFAULT_SETTINGS;
 import static backend.academy.game.GameContext.SETTINGS_MENU;
 import static backend.academy.game.GameContext.START_MENU;
 

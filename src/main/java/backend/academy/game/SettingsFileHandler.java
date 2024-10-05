@@ -1,7 +1,7 @@
 package backend.academy.game;
 
-import backend.academy.data.settings.GameSettings;
-import backend.academy.data.settings.MutableGameSettings;
+import backend.academy.data.gameSettings.GameSettings;
+import backend.academy.data.gameSettings.MutableGameSettings;
 import backend.academy.data.enums.MazeGenerationAlgorithm;
 import backend.academy.data.enums.PathfindingAlgorithm;
 import backend.academy.data.maze.CellType;

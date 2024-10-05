@@ -1,6 +1,6 @@
 package backend.academy.data.maze;
 
-import backend.academy.data.settings.GameSettings;
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.service.generators.BiomeGenerator;
 import backend.academy.service.renderers.MazeRenderer;
 import backend.academy.service.generators.PrimitiveBiomeGenerator;

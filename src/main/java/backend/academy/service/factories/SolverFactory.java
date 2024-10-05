@@ -1,6 +1,6 @@
 package backend.academy.service.factories;
 
-import backend.academy.data.settings.GameSettings;
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.exception.IncorrectSettingsException;
 import backend.academy.service.solvers.Solver;
 import backend.academy.service.solvers.AStarSolver;

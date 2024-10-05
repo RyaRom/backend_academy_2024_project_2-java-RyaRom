@@ -1,6 +1,6 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.settings.GameSettings;
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.maze.CellType;
 import java.util.Arrays;
 import java.util.List;

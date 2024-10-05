@@ -1,6 +1,6 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.settings.MutableGameSettings;
+import backend.academy.data.gameSettings.MutableGameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.service.renderers.MazeRenderer;

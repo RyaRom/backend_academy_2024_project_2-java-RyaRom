@@ -1,6 +1,6 @@
 package backend.academy.service.renderers;
 
-import backend.academy.data.settings.GameSettings;
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import java.util.List;

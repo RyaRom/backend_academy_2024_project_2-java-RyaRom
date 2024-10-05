@@ -1,6 +1,6 @@
 package backend.academy.service.generators;
 
-import backend.academy.data.settings.GameSettings;
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.maze.CellType;
 import backend.academy.data.maze.Point;
 import backend.academy.utils.Randomizer;
