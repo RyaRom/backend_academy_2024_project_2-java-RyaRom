@@ -6,6 +6,9 @@ import backend.academy.data.maze.Point;
 import backend.academy.exception.PathNotFoundException;
 import java.util.List;
 
+/**
+ * Interface for solving mazes.
+ */
 public interface Solver {
     /**
      * Solves the given maze and returns the path from start to end.

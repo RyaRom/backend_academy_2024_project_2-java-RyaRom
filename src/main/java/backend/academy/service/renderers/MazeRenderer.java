@@ -5,6 +5,9 @@ import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import java.util.List;
 
+/**
+ * Renders the maze. Takes rendering parameters from {@link GameSettings}
+ */
 public interface MazeRenderer {
     /**
      * Renders the maze. Takes rendering parameters from {@link GameSettings}

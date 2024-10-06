@@ -2,6 +2,9 @@ package backend.academy.service.renderers;
 
 import java.util.List;
 
+/**
+ * Interface for rendering the menu for CLI
+ */
 public interface CliRenderer {
     /**
      * Renders the menu for CLI

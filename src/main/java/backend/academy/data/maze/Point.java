@@ -98,10 +98,23 @@ public record Point(int row, int col) {
             .toList();
     }
 
+    /**
+     * Sets a value in a 2D array in this point coordinates
+     *
+     * @param array the 2D array
+     * @param val   the value to set
+     * @param <T>   the type of the array and value
+     */
     public <T> void setInArray(T[][] array, T val) {
         array[row][col] = val;
     }
 
+    /**
+     * Gets a value from a 2D array in this point coordinates
+     *
+     * @param array the 2D array
+     * @param <T>   the type of the array and value
+     */
     public <T> T getFromArray(T[][] array) {
         return array[row][col];
     }

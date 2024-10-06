@@ -18,6 +18,15 @@ public class BellmanSolver implements Solver {
 
     private Integer[][] distances;
 
+    /**
+     * Backtracking algorithm for finding the shortest path in a maze
+     * for Bellman and SPFA algorithms
+     *
+     * @param maze         the maze
+     * @param gameSettings the game settings
+     * @param distances    the distances array
+     * @return the shortest path
+     */
     protected static List<Point> backtracking(Maze maze, GameSettings gameSettings, Integer[][] distances) {
         Point current = gameSettings.end();
         List<Point> path = new ArrayList<>();

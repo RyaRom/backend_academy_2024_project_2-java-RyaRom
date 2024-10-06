@@ -16,7 +16,7 @@ public class Randomizer {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     /**
-     * Returns the first element greater than the key
+     * Returns the first element greater or equal to key
      *
      * @param list - sorted list
      * @param key  - key to search
@@ -115,7 +115,7 @@ public class Randomizer {
     }
 
     /**
-     * Makes random points in maze passage to generate more possible solutions
+     * Makes random holes in maze to generate more possible solutions
      *
      * @param bound approximate number of imperfections
      * @param maze  maze to imperfection

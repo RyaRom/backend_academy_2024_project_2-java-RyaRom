@@ -24,6 +24,12 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Main class of the game, representing the game context.
+ * <p>It contains the current state of the game, the
+ * input and output streams, starts and finishes the game loop.
+ * </p>
+ */
 @Getter
 @Setter
 @Log4j2

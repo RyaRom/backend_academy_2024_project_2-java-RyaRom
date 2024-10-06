@@ -17,7 +17,6 @@ public class PrimGenerator implements Generator {
 
     /**
      * Generates a maze using the Prim algorithm
-     * Maze is "perfect" but making finish reachable can make it imperfect
      *
      * @return the generated maze
      */

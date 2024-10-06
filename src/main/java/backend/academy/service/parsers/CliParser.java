@@ -1,5 +1,8 @@
 package backend.academy.service.parsers;
 
+/**
+ * Reads user input
+ */
 public interface CliParser {
 
     /**
