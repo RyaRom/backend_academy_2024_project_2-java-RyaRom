@@ -35,11 +35,11 @@ public class SettingsFileHandler implements FileHandler {
         configureDigit("maze width", gameSettings::mazeWidth);
         configureDigit("path render speed in ms", gameSettings::pathRenderSpeedMs);
         configureDouble("biomes frequency (2.0 is optimal max here)", gameSettings::biomesFreq);
-        configureSingleCharacter("pathRender", gameSettings::pathRender);
-        configureSingleCharacter("wallRender", gameSettings::wallRender);
-        configureSingleCharacter("passageRender", gameSettings::passageRender);
-        configureSingleCharacter("start", gameSettings::startRender);
-        configureSingleCharacter("end", gameSettings::endRender);
+        configureSingleCharacter("path render", gameSettings::pathRender);
+        configureSingleCharacter("wall render", gameSettings::wallRender);
+        configureSingleCharacter("passage render", gameSettings::passageRender);
+        configureSingleCharacter("start render", gameSettings::startRender);
+        configureSingleCharacter("end render", gameSettings::endRender);
         configureGenAlgorithm();
         configurePathAlgorithm();
         configureStartPoint();

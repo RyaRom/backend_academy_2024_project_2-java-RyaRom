@@ -108,6 +108,9 @@ public class Randomizer {
         if (bound <= 0.0) {
             return 0.0;
         }
+        if (origin < 0.0) {
+            return RANDOM.nextDouble(0.0, bound);
+        }
         return RANDOM.nextDouble(origin, bound);
     }
 

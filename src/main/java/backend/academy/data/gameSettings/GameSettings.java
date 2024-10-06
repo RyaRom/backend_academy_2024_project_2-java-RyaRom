@@ -35,7 +35,7 @@ public final class GameSettings {
     @Default
     private final List<CellType> additionalTypes = List.of(
         new CellType(true, 5, '░'),
-        new CellType(true, -10, '₿')
+        new CellType(true, 0, '₿')
     );
 
     @JsonProperty
@@ -84,7 +84,7 @@ public final class GameSettings {
 
     @JsonProperty
     @Default
-    private final Point end = Point.of(1, 1);
+    private final Point end = Point.of(9, 9);
 
     @JsonProperty
     @Default

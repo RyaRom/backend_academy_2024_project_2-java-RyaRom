@@ -8,7 +8,7 @@ package backend.academy.data.maze;
  * @param render    the character to render this cell as
  */
 public record CellType(boolean isPassage, int cost, char render) {
-    public static final CellType PASSAGE = new CellType(true, 1, '░');
+    public static final CellType PASSAGE = new CellType(true, 5, '░');
 
     public static final CellType WALL = new CellType(false, Integer.MAX_VALUE, '█');
 }

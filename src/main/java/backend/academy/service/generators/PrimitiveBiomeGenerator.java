@@ -41,7 +41,9 @@ public class PrimitiveBiomeGenerator implements BiomeGenerator {
             .distinct()
             .toList();
         weighedTypes = types.stream()
-            .collect(Collectors.toMap(type -> type, prob -> getRandomDouble(0.0, gameSettings.biomesFreq())));
+            .collect(Collectors.toMap(
+                type -> type,
+                prob -> getRandomDouble(gameSettings.biomesFreq() - 1.0, gameSettings.biomesFreq())));
         weighedTypes.put(PASSAGE, 2.0);
 
         var biomes = new CellType[gameSettings.mazeHeight()][gameSettings.mazeWidth()];

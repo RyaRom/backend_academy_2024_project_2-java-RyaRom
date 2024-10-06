@@ -3,11 +3,12 @@ package backend.academy.service.solvers;
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
-import java.util.ArrayDeque;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.PriorityBlockingQueue;
 import lombok.RequiredArgsConstructor;
 import static backend.academy.service.solvers.BellmanSolver.backtracking;
 
@@ -21,7 +22,10 @@ public class SpfaSolver implements Solver {
     public List<Point> solve(Maze maze) {
         init();
         gameSettings.start().setInArray(distances, 0);
-        Queue<Point> toVisit = new ArrayDeque<>();
+        PriorityBlockingQueue<Point> toVisit = new PriorityBlockingQueue<>(
+            maze.width() * maze.height(),
+            Comparator.comparingInt(p -> p.getFromArray(distances))
+        );
         Map<Point, Integer> relaxed = new HashMap<>();
         toVisit.add(gameSettings.start());
 

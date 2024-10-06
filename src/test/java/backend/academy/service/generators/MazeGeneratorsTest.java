@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MazeGeneratorsTest {
 
-    private MutableGameSettings gameSettings = MutableGameSettings.builder()
+    private final MutableGameSettings gameSettings = MutableGameSettings.builder()
         .mazeHeight(50)
         .mazeWidth(50)
         .end(Point.of(49, 49))

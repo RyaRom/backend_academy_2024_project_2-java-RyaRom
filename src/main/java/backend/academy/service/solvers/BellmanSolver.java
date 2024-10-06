@@ -3,6 +3,7 @@ package backend.academy.service.solvers;
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
+import backend.academy.exception.PathNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,10 +26,10 @@ public class BellmanSolver implements Solver {
         while (!current.equals(gameSettings.start())) {
             path.add(current);
             visited.add(current);
-            current = current.getNeighbours(maze).stream()
+            current = current.getPassageNeighbours(maze).stream()
                 .filter(n -> !visited.contains(n))
                 .min(Comparator.comparingInt(n -> n.getFromArray(distances)))
-                .orElse(gameSettings.start());
+                .orElseThrow(PathNotFoundException::new);
         }
         path.add(gameSettings.start());
 
