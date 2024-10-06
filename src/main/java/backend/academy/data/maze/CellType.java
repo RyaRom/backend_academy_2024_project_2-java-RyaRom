@@ -3,6 +3,10 @@ package backend.academy.data.maze;
 /**
  * Class representing type of the cell
  *
+ * <p>
+ * Behaviour of cells with cost < 0 is undefined
+ * </p>
+ *
  * @param isPassage true if the cell is a passage, false if it is a wall
  * @param cost      the cost to move through this cell
  * @param render    the character to render this cell as

@@ -35,7 +35,7 @@ public final class GameSettings {
     @Default
     private final List<CellType> additionalTypes = List.of(
         new CellType(true, 5, '░'),
-        new CellType(true, 0, '₿')
+        new CellType(true, 1, '₿')
     );
 
     @JsonProperty
@@ -122,6 +122,9 @@ public final class GameSettings {
             || end.row() >= mazeHeight()
             || start.equals(end)
             || biomesFreq < 0.0
-            || pathRenderSpeedMs < 0;
+            || pathRenderSpeedMs < 0
+            || additionalTypes
+            .stream()
+            .anyMatch(c -> c.cost() < 0);
     }
 }
