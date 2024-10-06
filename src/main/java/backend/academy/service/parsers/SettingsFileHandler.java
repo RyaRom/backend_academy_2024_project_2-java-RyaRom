@@ -48,7 +48,7 @@ public class SettingsFileHandler implements FileHandler {
     }
 
     private void configureDigit(String name, Consumer<Integer> setter) {
-        renderer.println("Enter %s (leave blank for default):%n".formatted(name));
+        renderer.println("Enter %s (leave blank for default)".formatted(name));
         var input = parser.read("^\\d*");
         if (!input.isBlank()) {
             try {
@@ -60,7 +60,7 @@ public class SettingsFileHandler implements FileHandler {
     }
 
     private void configureDouble(String name, Consumer<Double> setter) {
-        renderer.println("Enter %s (leave blank for default):%n".formatted(name));
+        renderer.println("Enter %s (leave blank for default)".formatted(name));
         var input = parser.read("^(\\d+(\\.\\d*)?)|\\s*$");
         if (!input.isBlank()) {
             try {
