@@ -45,7 +45,7 @@ class SettingsFileHandlerTest {
         when(parser.read(anyString())).thenReturn(
             "20",
             "20",
-            "0",
+            "100",
             "1.0",
             "·",
             "█",

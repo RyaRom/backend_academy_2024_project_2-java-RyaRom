@@ -32,17 +32,16 @@ public class PrimGenerator implements Generator {
         Point start = gameSettings.start();
         Point end = gameSettings.end();
         maze.setCellBiomeType(start, biomes);
-        List<Point> toVisit = new ArrayList<>();
-        maze.addNeighbours(toVisit, start);
+        List<Point> toVisit = new ArrayList<>(start.getWallNeighbours(maze));
 
         while (!toVisit.isEmpty()) {
             Point current = pullRandomObject(toVisit);
-            if (!maze.isOneNeighbourPassage(current)) {
+            if (maze.getNeighbourPassages(current) != 1) {
                 continue;
             }
 
             maze.setCellBiomeType(current, biomes);
-            maze.addNeighbours(toVisit, current);
+            toVisit.addAll(current.getWallNeighbours(maze));
         }
         maze.makePointReachable(end, start, biomes);
         imperfectionRandom((int) (gameSettings.biomesFreq() * 10), maze, biomes);

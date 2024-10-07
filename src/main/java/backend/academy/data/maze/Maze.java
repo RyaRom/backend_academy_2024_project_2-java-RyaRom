@@ -79,7 +79,7 @@ public record Maze(int height, int width, Cell[][] grid) {
         while (!neighbours.isEmpty() && !isReachable(current, start, new HashSet<>())) {
             current = pullRandomObject(neighbours);
             setCellBiomeType(current, biomes);
-            addNeighbours(neighbours, current);
+            neighbours.addAll(current.getWallNeighbours(this));
         }
     }
 
@@ -113,28 +113,16 @@ public record Maze(int height, int width, Cell[][] grid) {
     }
 
     /**
-     * Add neighbours to the toVisit list
+     * Get the number of passages around the point
      *
-     * @param toVisit the list to add neighbours to
-     * @param current the current cell
+     * @param point the point to get the number of passages around
+     * @return the number of passages around the point
      */
-    public void addNeighbours(List<Point> toVisit, Point current) {
-        current.getNeighbours(this).stream()
-            .filter(n -> !this.getCell(n).type().isPassage())
-            .forEach(toVisit::add);
-    }
-
-    /**
-     * Checks if a cell has exactly one neighbour passage
-     *
-     * @param point the cell
-     * @return true if the cell has exactly one neighbour passage, false otherwise
-     */
-    public boolean isOneNeighbourPassage(Point point) {
-        return point.getNeighbours(this).stream()
+    public int getNeighbourPassages(Point point) {
+        return (int) point.getNeighbours(this).stream()
             .map(this::getCell)
             .filter(c -> c.type().isPassage())
-            .count() == 1;
+            .count();
     }
 
     /**

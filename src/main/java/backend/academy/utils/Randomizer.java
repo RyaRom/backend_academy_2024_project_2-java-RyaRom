@@ -48,23 +48,6 @@ public class Randomizer {
     }
 
     /**
-     * Pulls a random object from a list
-     *
-     * @param objects - list of objects
-     * @param <T>     - type of objects in the list
-     * @return random object from the list
-     * @throws IllegalArgumentException if the list is empty
-     */
-    public static <T> T getRandomObject(List<T> objects) {
-        if (objects.isEmpty()) {
-            throw new IllegalArgumentException("No random element in the empty array");
-        }
-
-        int index = RANDOM.nextInt(objects.size());
-        return objects.get(index);
-    }
-
-    /**
      * Returns a random object from a map with weights
      *
      * @param objects - map of objects and their weights

@@ -99,6 +99,18 @@ public record Point(int row, int col) {
     }
 
     /**
+     * Returns a list of all wall neighbours of the point
+     *
+     * @param maze the maze
+     * @return the list of wall neighbours
+     */
+    public List<Point> getWallNeighbours(Maze maze) {
+        return this.getNeighbours(maze).stream()
+            .filter(p -> !maze.getCell(p).type().isPassage())
+            .toList();
+    }
+
+    /**
      * Sets a value in a 2D array in this point coordinates
      *
      * @param array the 2D array

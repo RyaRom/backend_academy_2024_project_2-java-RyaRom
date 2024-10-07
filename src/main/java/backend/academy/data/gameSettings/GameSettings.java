@@ -34,7 +34,7 @@ public final class GameSettings {
     @JsonProperty
     @Default
     private final List<CellType> additionalTypes = List.of(
-        new CellType(true, 5, '░'),
+        new CellType(true, 10, '░'),
         new CellType(true, 1, '₿')
     );
 
@@ -76,7 +76,7 @@ public final class GameSettings {
 
     @JsonProperty
     @Default
-    private final Integer pathRenderSpeedMs = 0;
+    private final Integer pathRenderSpeedMs = 100;
 
     @JsonProperty
     @Default
