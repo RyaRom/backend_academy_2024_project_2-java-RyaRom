@@ -1,32 +1,33 @@
 package backend.academy.service.solvers;
 
 import backend.academy.data.gameSettings.GameSettings;
+import backend.academy.data.maze.Cell;
 import backend.academy.data.maze.Maze;
 import backend.academy.data.maze.Point;
 import backend.academy.exception.PathNotFoundException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.PriorityBlockingQueue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import static backend.academy.service.solvers.BellmanSolver.backtracking;
 
 @Log4j2
 @RequiredArgsConstructor
 public class AStarSolver implements Solver {
+
     private final GameSettings gameSettings;
 
-    private Map<Point, Integer> heuristic;
+    private Integer[][] heuristic;
 
-    private Map<Point, Integer> distances;
+    private Integer[][] distances;
 
     private final Comparator<Point> aStarComparator =
-        Comparator.comparingInt(point -> distances.getOrDefault(point, Integer.MAX_VALUE / 2)
-            + heuristic.getOrDefault(point, Integer.MAX_VALUE / 2));
+        Comparator.comparingInt(point -> point.getFromArray(distances)
+            + point.getFromArray(heuristic));
 
     private Set<Point> closed;
 
@@ -34,10 +35,13 @@ public class AStarSolver implements Solver {
 
     @Override
     public List<Point> solve(Maze maze) {
+        distances = new Integer[maze.height()][maze.width()];
+        for (Integer[] distance : distances) {
+            Arrays.fill(distance, Integer.MAX_VALUE / 2);
+        }
         heuristic = calculateHeuristic(maze);
-        distances = new HashMap<>();
         closed = new HashSet<>();
-        distances.put(gameSettings.start(), 0);
+        gameSettings.start().setInArray(distances, 0);
         toVisit = new PriorityBlockingQueue<>(maze.width() * maze.height(), aStarComparator);
         toVisit.add(gameSettings.start());
         log.info("Starting A-star\n\n\n");
@@ -57,20 +61,7 @@ public class AStarSolver implements Solver {
     }
 
     private List<Point> backtrack(Maze maze) {
-        List<Point> path = new ArrayList<>();
-        Point current = gameSettings.end();
-        Set<Point> tracked = new HashSet<>();
-
-        while (!current.equals(gameSettings.start())) {
-            path.add(current);
-            tracked.add(current);
-            current = current.getPassageNeighbours(maze).stream()
-                .filter(p -> !tracked.contains(p))
-                .min(aStarComparator)
-                .orElseThrow(PathNotFoundException::new);
-        }
-        path.add(gameSettings.start());
-        return path.reversed();
+        return backtracking(maze, gameSettings, distances);
     }
 
     private int manhattanDist(Point point) {
@@ -78,17 +69,18 @@ public class AStarSolver implements Solver {
             + Math.abs(point.col() - gameSettings.end().col());
     }
 
-    private Map<Point, Integer> calculateHeuristic(Maze maze) {
-        Map<Point, Integer> heuristicMap = new HashMap<>();
-        for (var row : maze.grid()) {
-            for (var cell : row) {
+    private Integer[][] calculateHeuristic(Maze maze) {
+        Integer[][] heuristicMap = new Integer[maze.height()][maze.width()];
+        Cell[][] grid = maze.grid();
+        for (int i = 0, gridLength = grid.length; i < gridLength; i++) {
+            var row = grid[i];
+            for (int j = 0, rowLength = row.length; j < rowLength; j++) {
+                var cell = row[j];
                 if (!cell.type().isPassage()) {
+                    heuristicMap[i][j] = Integer.MAX_VALUE / 2;
                     continue;
                 }
-                heuristicMap.put(
-                    cell.coordinates(), manhattanDist(cell.coordinates())
-                        + cell.type().cost()
-                );
+                heuristicMap[i][j] = manhattanDist(cell.coordinates()) + cell.type().cost();
             }
         }
         return heuristicMap;
@@ -103,12 +95,12 @@ public class AStarSolver implements Solver {
                 continue;
             }
 
-            int newCost = distances.get(point) + maze.getCell(neighbour).type().cost();
-            int oldCost = distances.getOrDefault(neighbour, Integer.MAX_VALUE);
+            int newCost = point.getFromArray(distances) + maze.getCell(neighbour).type().cost();
+            int oldCost = neighbour.getFromArray(distances);
             log.info("New cost: {}, old cost: {}", newCost, oldCost);
             if (newCost < oldCost) {
                 log.info("Updating cost");
-                distances.put(neighbour, newCost);
+                neighbour.setInArray(distances, newCost);
                 toVisit.add(neighbour);
             } else {
                 log.info("Not updating cost");

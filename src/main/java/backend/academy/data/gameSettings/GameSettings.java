@@ -125,6 +125,6 @@ public final class GameSettings {
             || pathRenderSpeedMs < 0
             || additionalTypes
             .stream()
-            .anyMatch(c -> c.cost() < 0);
+            .anyMatch(c -> c.cost() <= 0);
     }
 }

@@ -12,16 +12,15 @@ import java.io.PrintStream;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static backend.academy.data.gameSettings.GameSettings.DEFAULT_SETTINGS;
 import static backend.academy.data.maze.CellType.PASSAGE;
 import static backend.academy.data.maze.CellType.WALL;
 import static backend.academy.utils.Randomizer.getRandomInt;
-import static net.bytebuddy.matcher.ElementMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyChar;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 
@@ -140,8 +139,9 @@ class SolversTest {
         for (int i = 0; i < 100; i++) {
             gameSettings.mazeWidth(20);
             gameSettings.mazeHeight(20);
-            gameSettings.biomesFreq(0.0);
+            gameSettings.biomesFreq(2.0);
             gameSettings.end(Point.of(getRandomInt(19), getRandomInt(19)));
+            gameSettings.additionalTypes(DEFAULT_SETTINGS.additionalTypes());
             Maze maze =
                 new PrimGenerator(gameSettings.immutable(),
                     new PrimitiveBiomeGenerator(gameSettings.immutable())).generate();
