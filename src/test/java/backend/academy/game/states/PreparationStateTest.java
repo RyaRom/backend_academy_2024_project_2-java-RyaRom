@@ -47,6 +47,7 @@ class PreparationStateTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(gameContext.defaultSettings()).thenReturn(DEFAULT_SETTINGS);
     }
 
     @Test
@@ -74,11 +75,10 @@ class PreparationStateTest {
 
     @Test
     void createAndLoadCorrectSettings() {
-        GameSettings correct = DEFAULT_SETTINGS;
         FileHandler fileHandler = mock(FileHandler.class);
         when(fileHandlerFactory.fileHandler(any(), any(), any())).thenReturn(fileHandler);
         when(fileParser.getJsonInDir(any())).thenReturn(new String[1]);
-        when(fileParser.readFromFile(any(), any())).thenReturn(correct);
+        when(fileParser.readFromFile(any(), any())).thenReturn(DEFAULT_SETTINGS);
         when(parser.readCommand(anyInt(), anyInt())).thenReturn(
             3, 1, 2, 3, 2, 1, 2, 0, 1
         );

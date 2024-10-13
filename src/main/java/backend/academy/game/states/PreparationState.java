@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import static backend.academy.data.gameSettings.GameSettings.DEFAULT_SETTINGS;
 import static backend.academy.game.GameContext.SETTINGS_MENU;
 import static backend.academy.game.GameContext.START_MENU;
 
@@ -43,7 +42,7 @@ public class PreparationState implements GameState {
 
     private final FileHandlerFactory fileHandlerFactory;
 
-    private GameSettings gameSettings = DEFAULT_SETTINGS;
+    private GameSettings newSettings;
 
     @Override
     public void gameCycle(GameContext gameContext) {
@@ -51,9 +50,12 @@ public class PreparationState implements GameState {
         if (gameContext.terminate()) {
             return;
         }
+        if (newSettings == null) {
+            newSettings = gameContext.defaultSettings();
+        }
         renderer.renderIntro();
         renderer.renderMenu(START_MENU);
-        if (gameSettings.isInvalid()) {
+        if (newSettings.isInvalid()) {
             renderer.println(SETTINGS_ERROR);
         }
 
@@ -83,11 +85,11 @@ public class PreparationState implements GameState {
                 gameCycle(gameContext);
                 return;
             }
-            case 1 -> gameSettings = DEFAULT_SETTINGS;
+            case 1 -> newSettings = gameContext.defaultSettings();
             default -> {
                 String chosenPath = settingsLocation + "/" + allSettings.get(menuChoice - 1);
                 log.info("Adding words from JSON file: {}", chosenPath);
-                gameSettings = fileParser.readFromFile(new File(chosenPath), GameSettings.class);
+                newSettings = fileParser.readFromFile(new File(chosenPath), GameSettings.class);
             }
         }
         gameCycle(gameContext);
@@ -117,14 +119,15 @@ public class PreparationState implements GameState {
 
     @Override
     public void nextState(GameContext gameContext) {
-        if (gameSettings.isInvalid()) {
+        if (newSettings.isInvalid()) {
             gameCycle(gameContext);
             return;
         }
-        log.info("Game settings is {}. Game is configured", gameSettings.toString());
-        GeneratorFactory generatorFactory = new GeneratorFactory(gameSettings);
-        SolverFactory solverFactory = new SolverFactory(gameSettings);
-        MazeRenderer mazeRenderer = new DefaultMazeRenderer(gameSettings, gameContext.outputWriter());
+        log.info("Game settings is {}. Game is configured", newSettings.toString());
+        gameContext.defaultSettings(newSettings);
+        GeneratorFactory generatorFactory = new GeneratorFactory(newSettings);
+        SolverFactory solverFactory = new SolverFactory(newSettings);
+        MazeRenderer mazeRenderer = new DefaultMazeRenderer(newSettings, gameContext.outputWriter());
 
         gameContext.start(solverFactory.solver(),
             generatorFactory.generator(),

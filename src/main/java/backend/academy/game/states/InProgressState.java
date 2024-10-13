@@ -61,6 +61,6 @@ public class InProgressState implements GameState {
 
     @Override
     public void nextState(GameContext gameContext) {
-        gameContext.init();
+        gameContext.init(gameContext.defaultSettings());
     }
 }

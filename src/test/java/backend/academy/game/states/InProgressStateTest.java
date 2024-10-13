@@ -52,7 +52,7 @@ class InProgressStateTest {
         verify(solver, times(1)).solve(any());
         verify(mazeRenderer, times(1)).render(any());
         verify(mazeRenderer, times(1)).render(any(), any());
-        verify(gameContext, times(1)).init();
+        verify(gameContext, times(1)).init(any());
     }
 
     @Test

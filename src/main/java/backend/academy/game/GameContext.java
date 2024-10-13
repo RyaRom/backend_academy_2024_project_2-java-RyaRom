@@ -1,5 +1,6 @@
 package backend.academy.game;
 
+import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.game.states.GameState;
 import backend.academy.game.states.InProgressState;
 import backend.academy.game.states.PreparationState;
@@ -61,10 +62,13 @@ public class GameContext {
 
     private GameState state;
 
+    private GameSettings defaultSettings;
+
     private boolean terminate = false;
 
-    public void init() {
+    public void init(GameSettings defaultSettings) {
         log.info("Game is started");
+        this.defaultSettings = defaultSettings;
         state = new PreparationState(
             new DefaultCliRenderer(outputWriter),
             new DefaultCliParser(inputReader, outputWriter),
