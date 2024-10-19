@@ -36,7 +36,7 @@ public class PrimGenerator implements Generator {
 
         while (!toVisit.isEmpty()) {
             Point current = pullRandomObject(toVisit);
-            if (maze.getNeighbourPassages(current) != 1) {
+            if (current.getPassageNeighbours(maze).size() != 1) {
                 continue;
             }
 

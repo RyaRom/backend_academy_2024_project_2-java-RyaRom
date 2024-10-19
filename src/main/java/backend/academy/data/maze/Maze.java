@@ -113,19 +113,6 @@ public record Maze(int height, int width, Cell[][] grid) {
     }
 
     /**
-     * Get the number of passages around the point
-     *
-     * @param point the point to get the number of passages around
-     * @return the number of passages around the point
-     */
-    public int getNeighbourPassages(Point point) {
-        return (int) point.getNeighbours(this).stream()
-            .map(this::getCell)
-            .filter(c -> c.type().isPassage())
-            .count();
-    }
-
-    /**
      * Get a random point from maze
      *
      * @return a random point
