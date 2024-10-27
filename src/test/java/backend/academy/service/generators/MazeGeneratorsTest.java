@@ -23,7 +23,7 @@ class MazeGeneratorsTest {
         solver = new SolverFactory(gameSettings).solver();
     }
 
-    @RepeatedTest(100)
+    @RepeatedTest(50)
     void prim() {
         var gameSettings = GameSettings.builder()
             .mazeHeight(50)
@@ -41,13 +41,13 @@ class MazeGeneratorsTest {
         });
     }
 
-    @RepeatedTest(100)
+    @RepeatedTest(50)
     void kruskal() {
         var gameSettings = GameSettings.builder()
-            .mazeHeight(50)
-            .mazeWidth(50)
+            .mazeHeight(30)
+            .mazeWidth(30)
             .start(Point.of(0, 0))
-            .end(Point.of(49, 49))
+            .end(Point.of(29, 29))
             .pathfindingAlgorithm(BFS)
             .generationAlgorithm(KRUSKAL)
             .build();

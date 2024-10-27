@@ -19,7 +19,7 @@ public class GeneratorFactory {
      * @throws IncorrectSettingsException if the settings are incorrect
      */
     public Generator generator() {
-        if (gameSettings.isInvalid()) {
+        if (!gameSettings.isInvalid().isEmpty()) {
             throw new IncorrectSettingsException();
         }
 

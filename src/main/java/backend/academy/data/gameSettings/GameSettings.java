@@ -6,6 +6,7 @@ import backend.academy.data.maze.CellType;
 import backend.academy.data.maze.Point;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -90,41 +91,87 @@ public final class GameSettings {
     @Default
     private final Double biomesFreq = 1.0;
 
-    /**
-     * Validates the game settings
-     *
-     * @return true if the settings are invalid, false otherwise
-     */
     @JsonIgnore
     @SuppressWarnings("CyclomaticComplexity")
-    public boolean isInvalid() {
-        return additionalTypes == null
-            || pathRender == null
-            || wallRender == null
-            || passageRender == null
-            || startRender == null
-            || endRender == null
-            || generationAlgorithm == null
-            || pathfindingAlgorithm == null
-            || mazeHeight == null
-            || mazeWidth == null
-            || start == null
-            || end == null
-            || biomesFreq == null
-            || pathRenderSpeedMs == null
-            || mazeHeight() < 1
-            || mazeWidth() < 1
-            || start.col() < 0 || start.row() < 0
-            || end.col() < 0 || end.row() < 0
-            || start.col() >= mazeWidth()
-            || start.row() >= mazeHeight()
-            || end.col() >= mazeWidth()
-            || end.row() >= mazeHeight()
-            || start.equals(end)
-            || biomesFreq < 0.0
-            || pathRenderSpeedMs < 0
-            || additionalTypes
-            .stream()
-            .anyMatch(c -> c.cost() <= 0);
+    public List<String> isInvalid() {
+        List<String> violations = new ArrayList<>();
+        if (additionalTypes == null || additionalTypes.isEmpty()) {
+            violations.add("No additional types specified");
+        }
+        if (pathRender == null) {
+            violations.add("No path render specified");
+        }
+        if (wallRender == null) {
+            violations.add("No wall render specified");
+        }
+        if (passageRender == null) {
+            violations.add("No passage render specified");
+        }
+        if (startRender == null) {
+            violations.add("No start render specified");
+        }
+        if (endRender == null) {
+            violations.add("No end render specified");
+        }
+        if (generationAlgorithm == null) {
+            violations.add("No generation algorithm specified");
+        }
+        if (pathfindingAlgorithm == null) {
+            violations.add("No pathfinding algorithm specified");
+        }
+        if (pathRenderSpeedMs == null) {
+            violations.add("No path render speed specified");
+        }
+        if (mazeHeight == null || mazeWidth == null) {
+            violations.add("Maze dimensions not specified");
+        } else {
+            if (mazeHeight < 1) {
+                violations.add("Maze height must be at least 1");
+            }
+            if (mazeWidth < 1) {
+                violations.add("Maze width must be at least 1");
+            }
+        }
+        if (start == null) {
+            violations.add("Start position not specified");
+        } else {
+            if (start.col() < 0 || start.row() < 0) {
+                violations.add("Start position must be non-negative");
+            }
+            if ((mazeWidth == null ? 0 : mazeWidth) <= start.col()) {
+                violations.add("Start column exceeds maze width");
+            }
+            if ((mazeHeight == null ? 0 : mazeHeight) <= start.row()) {
+                violations.add("Start row exceeds maze height");
+            }
+        }
+        if (end == null) {
+            violations.add("End position not specified");
+        } else {
+            if (end.col() < 0 || end.row() < 0) {
+                violations.add("End position must be non-negative");
+            }
+            if (end.col() >= (mazeWidth == null ? 0 : mazeWidth)) {
+                violations.add("End column exceeds maze width");
+            }
+            if (end.row() >= (mazeHeight == null ? 0 : mazeHeight)) {
+                violations.add("End row exceeds maze height");
+            }
+            if (start != null && start.equals(end)) {
+                violations.add("Start and end positions must be different");
+            }
+        }
+        if (biomesFreq == null) {
+            violations.add("Biome frequency not specified");
+        } else if (biomesFreq < 0.0) {
+            violations.add("Biome frequency must be non-negative");
+        }
+        if (pathRenderSpeedMs != null && pathRenderSpeedMs < 0) {
+            violations.add("Path render speed must be non-negative");
+        }
+        if (additionalTypes != null && additionalTypes.stream().anyMatch(c -> c.cost() <= 0)) {
+            violations.add("Additional types must have positive cost");
+        }
+        return violations;
     }
 }

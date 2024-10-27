@@ -2,9 +2,9 @@ package backend.academy.data.maze;
 
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.service.generators.BiomeGenerator;
-import backend.academy.service.renderers.MazeRenderer;
 import backend.academy.service.generators.PrimitiveBiomeGenerator;
 import backend.academy.service.renderers.DefaultMazeRenderer;
+import backend.academy.service.renderers.MazeRenderer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static backend.academy.data.maze.CellType.PASSAGE;
@@ -13,13 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MazeTest {
-    private GameSettings gameSettings = GameSettings.builder().build();
+    private final GameSettings gameSettings = GameSettings.builder().build();
+
+    private final BiomeGenerator biomeGenerator = new PrimitiveBiomeGenerator(gameSettings);
 
     private Maze maze;
-
-    private MazeRenderer renderer = new DefaultMazeRenderer(gameSettings, System.out);
-
-    private BiomeGenerator biomeGenerator = new PrimitiveBiomeGenerator(gameSettings);
 
     @Test
     void makePointReachable() {
@@ -28,7 +26,7 @@ class MazeTest {
         maze = new Maze(5, 5);
         var biomes = biomeGenerator.generate();
         maze.setCellBiomeType(start, biomes);
-        renderer = new DefaultMazeRenderer(GameSettings.builder()
+        MazeRenderer renderer = new DefaultMazeRenderer(GameSettings.builder()
             .start(start)
             .end(end)
             .build(), System.out);

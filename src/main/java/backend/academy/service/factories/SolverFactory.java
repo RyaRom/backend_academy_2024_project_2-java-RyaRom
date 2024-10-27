@@ -21,7 +21,7 @@ public class SolverFactory {
      * @throws IncorrectSettingsException if the game settings are invalid
      */
     public Solver solver() {
-        if (gameSettings.isInvalid()) {
+        if (!gameSettings.isInvalid().isEmpty()) {
             throw new IncorrectSettingsException();
         }
 

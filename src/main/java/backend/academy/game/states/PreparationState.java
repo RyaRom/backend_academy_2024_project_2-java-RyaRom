@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import static backend.academy.game.GameContext.SETTINGS_MENU;
@@ -55,8 +56,12 @@ public class PreparationState implements GameState {
         }
         renderer.renderIntro();
         renderer.renderMenu(START_MENU);
-        if (newSettings.isInvalid()) {
-            renderer.println(SETTINGS_ERROR);
+        var validations = newSettings.isInvalid();
+        if (!validations.isEmpty()) {
+            renderer.println(SETTINGS_ERROR
+                + System.lineSeparator()
+                + validations.stream()
+                    .collect(Collectors.joining(System.lineSeparator())));
         }
 
         int command = parser.readCommand(0, START_MENU.size());
@@ -119,7 +124,7 @@ public class PreparationState implements GameState {
 
     @Override
     public void nextState(GameContext gameContext) {
-        if (newSettings.isInvalid()) {
+        if (!newSettings.isInvalid().isEmpty()) {
             gameCycle(gameContext);
             return;
         }
