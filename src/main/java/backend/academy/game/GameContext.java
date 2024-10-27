@@ -76,6 +76,10 @@ public class GameContext {
             SETTINGS_LOCATION,
             new FileHandlerFactory()
         );
+
+        if (!SETTINGS_LOCATION.exists()) {
+            SETTINGS_LOCATION.mkdirs();
+        }
         state.gameCycle(this);
     }
 
