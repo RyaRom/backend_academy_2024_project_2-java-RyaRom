@@ -11,8 +11,9 @@ import backend.academy.service.renderers.CliRenderer;
 import java.io.File;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static backend.academy.data.gameSettings.GameSettings.DEFAULT_SETTINGS;
 import static backend.academy.game.states.PreparationState.SETTINGS_ERROR;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class PreparationStateTest {
 
     @Mock
@@ -46,7 +48,6 @@ class PreparationStateTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         when(gameContext.defaultSettings()).thenReturn(DEFAULT_SETTINGS);
     }
 
@@ -78,7 +79,6 @@ class PreparationStateTest {
         FileHandler fileHandler = mock(FileHandler.class);
         when(fileHandlerFactory.fileHandler(any(), any(), any())).thenReturn(fileHandler);
         when(fileParser.getJsonInDir(any())).thenReturn(new String[1]);
-        when(fileParser.readFromFile(any(), any())).thenReturn(DEFAULT_SETTINGS);
         when(parser.readCommand(anyInt(), anyInt())).thenReturn(
             3, 1, 2, 3, 2, 1, 2, 0, 1
         );

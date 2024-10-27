@@ -23,11 +23,15 @@ class MazeTest {
 
     @Test
     void makePointReachable() {
-        Point start = Point.of(1, 1);
+        Point start = Point.of(0, 0);
         Point end = Point.of(4, 4);
         maze = new Maze(5, 5);
         var biomes = biomeGenerator.generate();
         maze.setCellBiomeType(start, biomes);
+        renderer = new DefaultMazeRenderer(GameSettings.builder()
+            .start(start)
+            .end(end)
+            .build(), System.out);
         renderer.render(maze);
 
         assertFalse(maze.isReachable(end, start));

@@ -6,16 +6,17 @@ import backend.academy.service.parsers.CliParser;
 import backend.academy.service.renderers.CliRenderer;
 import backend.academy.service.renderers.MazeRenderer;
 import backend.academy.service.solvers.Solver;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class InProgressStateTest {
 
     @Mock
@@ -35,11 +36,6 @@ class InProgressStateTest {
 
     @Mock
     private GameContext gameContext;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void flow() {

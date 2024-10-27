@@ -4,10 +4,9 @@ import backend.academy.data.gameSettings.GameSettings;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static backend.academy.data.gameSettings.GameSettings.DEFAULT_SETTINGS;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -19,17 +18,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class JsonParserTest {
-    private JsonParser<GameSettings> jsonParser;
+    private final ObjectMapper mapper = mock(ObjectMapper.class);
 
-    @Mock
-    private ObjectMapper mapper;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        jsonParser = new JsonParser<>(mapper);
-    }
+    private final JsonParser<GameSettings> jsonParser = new JsonParser<>(mapper);
 
     @Test
     void testReadFromFile() throws Exception {

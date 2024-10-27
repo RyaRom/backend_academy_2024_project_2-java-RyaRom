@@ -3,14 +3,14 @@ package backend.academy.service.parsers;
 import backend.academy.data.gameSettings.GameSettings;
 import backend.academy.data.gameSettings.MutableGameSettings;
 import backend.academy.data.maze.CellType;
-import backend.academy.service.factories.FileHandlerFactory;
 import backend.academy.service.renderers.CliRenderer;
 import java.io.File;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -21,6 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class SettingsFileHandlerTest {
     @Mock
     private CliParser parser;
@@ -31,14 +32,8 @@ class SettingsFileHandlerTest {
     @Mock
     private FileParser<GameSettings> fileParser;
 
+    @InjectMocks
     private SettingsFileHandler settingsFileHandler;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        FileHandlerFactory fileHandlerFactory = new FileHandlerFactory();
-        settingsFileHandler = (SettingsFileHandler) fileHandlerFactory.fileHandler(parser, renderer, fileParser);
-    }
 
     @Test
     void testCreateSettingsWithValidInput() {

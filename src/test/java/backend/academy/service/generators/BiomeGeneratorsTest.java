@@ -23,11 +23,9 @@ class BiomeGeneratorsTest {
         .additionalTypes(List.of(cellA, cellB, cellC, cellD))
         .build();
 
-    private PrimitiveBiomeGenerator generator;
-
     @Test
     void generate() {
-        generator = new PrimitiveBiomeGenerator(gameSettings);
+        PrimitiveBiomeGenerator generator = new PrimitiveBiomeGenerator(gameSettings);
         var biome = generator.generate();
 
         for (var arr : biome) {

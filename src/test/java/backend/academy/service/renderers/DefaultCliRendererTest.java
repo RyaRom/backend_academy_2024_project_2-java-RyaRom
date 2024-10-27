@@ -2,27 +2,24 @@ package backend.academy.service.renderers;
 
 import java.io.PrintStream;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class DefaultCliRendererTest {
-
-    private DefaultCliRenderer cliRenderer;
 
     @Mock
     private PrintStream outputWriter;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        cliRenderer = new DefaultCliRenderer(outputWriter);
-    }
+    @InjectMocks
+    private DefaultCliRenderer cliRenderer;
 
     @Test
     void testRenderIntro() {
