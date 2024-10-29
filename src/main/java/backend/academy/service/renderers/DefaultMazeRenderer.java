@@ -86,9 +86,17 @@ public class DefaultMazeRenderer implements MazeRenderer {
         boolean isLowerWall = lower != null && !maze.getCell(lower).type().isPassage();
         boolean isRightWall = right != null && !maze.getCell(right).type().isPassage();
         boolean isLeftWall = left != null && !maze.getCell(left).type().isPassage();
-        if ((isUpperWall && isLowerWall && isRightWall && isLeftWall)
-            || (isUpperWall && isLowerWall && isRightWall && !isLeftWall)
-            || (isUpperWall && isLowerWall && !isRightWall && isLeftWall)) {
+        return getAsciiSymbol(isUpperWall, isLowerWall, isRightWall, isLeftWall);
+    }
+
+    private char getAsciiSymbol(
+        boolean isUpperWall,
+        boolean isLowerWall,
+        boolean isRightWall,
+        boolean isLeftWall
+    ) {
+        if (isUpperWall && isLowerWall && isRightWall
+            || isUpperWall && isLowerWall && isLeftWall) {
             return '+';
         }
         if ((isUpperWall || isLowerWall)) {
@@ -99,5 +107,4 @@ public class DefaultMazeRenderer implements MazeRenderer {
         }
         return '+';
     }
-
 }
