@@ -34,6 +34,7 @@ public class SettingsFileHandler implements FileHandler {
         configureDigit("maze height", gameSettings::mazeHeight);
         configureDigit("maze width", gameSettings::mazeWidth);
         configureDigit("path render speed in ms", gameSettings::pathRenderSpeedMs);
+        configureBoolean("ascii mode for render?", gameSettings::asciiMode);
         configureDouble("biomes frequency (2.0 is optimal max here)", gameSettings::biomesFreq);
         configureSingleCharacter("path render", gameSettings::pathRender);
         configureSingleCharacter("wall render", gameSettings::wallRender);
@@ -76,6 +77,14 @@ public class SettingsFileHandler implements FileHandler {
         var input = parser.read(".?");
         if (!input.isBlank()) {
             setter.accept(input.charAt(0));
+        }
+    }
+
+    private void configureBoolean(String settingName, Consumer<Boolean> setter) {
+        renderer.println("Is %s (leave blank for default)".formatted(settingName));
+        var input = parser.read("true|false");
+        if (!input.isBlank()) {
+            setter.accept(Boolean.parseBoolean(input));
         }
     }
 

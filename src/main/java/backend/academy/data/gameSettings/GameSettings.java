@@ -61,6 +61,10 @@ public final class GameSettings {
 
     @JsonProperty
     @Default
+    private final Boolean asciiMode = true;
+
+    @JsonProperty
+    @Default
     private final Integer mazeHeight = 20;
 
     @JsonProperty
@@ -100,6 +104,9 @@ public final class GameSettings {
         }
         if (pathRender == null) {
             violations.add("No path render specified");
+        }
+        if (asciiMode == null) {
+            violations.add("No ascii mode specified");
         }
         if (wallRender == null) {
             violations.add("No wall render specified");

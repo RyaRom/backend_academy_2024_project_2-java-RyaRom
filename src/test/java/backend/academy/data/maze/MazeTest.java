@@ -17,13 +17,11 @@ class MazeTest {
 
     private final BiomeGenerator biomeGenerator = new PrimitiveBiomeGenerator(gameSettings);
 
-    private Maze maze;
-
     @Test
     void makePointReachable() {
         Point start = Point.of(0, 0);
         Point end = Point.of(4, 4);
-        maze = new Maze(5, 5);
+        Maze maze = new Maze(5, 5);
         var biomes = biomeGenerator.generate();
         maze.setCellBiomeType(start, biomes);
         MazeRenderer renderer = new DefaultMazeRenderer(GameSettings.builder()
@@ -43,7 +41,7 @@ class MazeTest {
 
     @Test
     void reachable() {
-        maze = new Maze(4, 4);
+        Maze maze = new Maze(4, 4);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 maze.grid()[i][j] = new Cell(Point.of(i, j), PASSAGE);
@@ -59,7 +57,7 @@ class MazeTest {
 
     @Test
     void notReachable() {
-        maze = new Maze(2, 2);
+        Maze maze = new Maze(2, 2);
         Point start = Point.of(0, 0);
         Point end = Point.of(1, 1);
         maze.setCell(Point.of(0, 0), PASSAGE);

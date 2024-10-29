@@ -23,6 +23,12 @@ import static lombok.Builder.Default;
 @EqualsAndHashCode
 public final class MutableGameSettings {
     @Default
+    private Boolean asciiMode = DEFAULT_SETTINGS.asciiMode();
+
+    @Default
+    private MazeGenerationAlgorithm generationAlgorithm = DEFAULT_SETTINGS.generationAlgorithm();
+
+    @Default
     private List<CellType> additionalTypes = DEFAULT_SETTINGS.additionalTypes();
 
     @Default
@@ -45,9 +51,6 @@ public final class MutableGameSettings {
 
     @Default
     private Integer mazeWidth = DEFAULT_SETTINGS.mazeWidth();
-
-    @Default
-    private MazeGenerationAlgorithm generationAlgorithm = DEFAULT_SETTINGS.generationAlgorithm();
 
     @Default
     private PathfindingAlgorithm pathfindingAlgorithm = DEFAULT_SETTINGS.pathfindingAlgorithm();

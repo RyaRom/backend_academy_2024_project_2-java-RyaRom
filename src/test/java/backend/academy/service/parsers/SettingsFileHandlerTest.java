@@ -41,6 +41,7 @@ class SettingsFileHandlerTest {
             "20",
             "20",
             "100",
+            "true",
             "1.0",
             "·",
             "█",
@@ -75,7 +76,7 @@ class SettingsFileHandlerTest {
         verify(renderer, times(1)).println(contains("end point"));
         verify(renderer, times(1)).println(contains("Would you like to add custom cell types?"));
 
-        verify(parser, times(18)).read(anyString());
+        verify(parser, times(19)).read(anyString());
         var settings = MutableGameSettings.builder().build();
         settings.additionalTypes(List.of(new CellType(true, 0, '*')));
         assertEquals(settings, settingsFileHandler.gameSettings());
@@ -84,6 +85,7 @@ class SettingsFileHandlerTest {
     @Test
     void testCreateSettingsWithInvalidInput() {
         when(parser.read(anyString())).thenReturn(
+            "",
             "",
             "",
             "",

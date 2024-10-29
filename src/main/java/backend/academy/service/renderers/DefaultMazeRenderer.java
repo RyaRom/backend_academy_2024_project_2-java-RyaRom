@@ -24,7 +24,7 @@ public class DefaultMazeRenderer implements MazeRenderer {
         var grid = maze.grid();
         for (Cell[] cells : grid) {
             for (Cell cell : cells) {
-                outputWriter.print(getRenderForCell(cell));
+                outputWriter.print(getRenderForCell(cell, maze));
             }
             outputWriter.println();
         }
@@ -48,7 +48,7 @@ public class DefaultMazeRenderer implements MazeRenderer {
                 if (path.contains(cell.coordinates())) {
                     outputWriter.print(gameSettings.pathRender());
                 } else {
-                    outputWriter.print(getRenderForCell(cell));
+                    outputWriter.print(getRenderForCell(cell, maze));
                 }
             }
             outputWriter.println();
@@ -57,7 +57,7 @@ public class DefaultMazeRenderer implements MazeRenderer {
     }
 
     @SuppressWarnings("ReturnCount")
-    private char getRenderForCell(Cell cell) {
+    private char getRenderForCell(Cell cell, Maze maze) {
         var type = cell.type();
         if (cell.coordinates().equals(gameSettings.start())) {
             return gameSettings.startRender();
@@ -69,9 +69,35 @@ public class DefaultMazeRenderer implements MazeRenderer {
             return gameSettings.passageRender();
         }
         if (type.equals(WALL)) {
+            if (gameSettings.asciiMode()) {
+                return getAsciiRender(cell, maze);
+            }
             return gameSettings.wallRender();
         }
         return type.render();
+    }
+
+    private char getAsciiRender(Cell cell, Maze maze) {
+        Point upper = cell.coordinates().upper();
+        Point lower = cell.coordinates().lower(maze.height());
+        Point right = cell.coordinates().right(maze.width());
+        Point left = cell.coordinates().left();
+        boolean isUpperWall = upper != null && !maze.getCell(upper).type().isPassage();
+        boolean isLowerWall = lower != null && !maze.getCell(lower).type().isPassage();
+        boolean isRightWall = right != null && !maze.getCell(right).type().isPassage();
+        boolean isLeftWall = left != null && !maze.getCell(left).type().isPassage();
+        if ((isUpperWall && isLowerWall && isRightWall && isLeftWall)
+            || (isUpperWall && isLowerWall && isRightWall && !isLeftWall)
+            || (isUpperWall && isLowerWall && !isRightWall && isLeftWall)) {
+            return '+';
+        }
+        if ((isUpperWall || isLowerWall)) {
+            return '|';
+        }
+        if (isRightWall || isLeftWall) {
+            return '-';
+        }
+        return '+';
     }
 
 }
